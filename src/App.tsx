@@ -1,8 +1,12 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+const { REACT_APP_API_TOKEN } = process.env;
 
 function App() {
+  const asd = REACT_APP_API_TOKEN
+  console.log(asd)
+  console.log(process.env.API_TOKEN)
   return (
     <div className="App">
       <header className="App-header">
