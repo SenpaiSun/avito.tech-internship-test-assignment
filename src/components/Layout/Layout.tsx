@@ -1,11 +1,11 @@
-import { useMantineColorScheme } from '@mantine/core';
-import { Link, Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import { Header } from '../Header/Header';
 import { Footer } from '../Footer';
+const { REACT_APP_API_TOKEN } = process.env
 
 export const Layout = () => {
-  const { colorScheme } = useMantineColorScheme();
-  console.log(colorScheme);
+  const token = REACT_APP_API_TOKEN
+  console.log(token)
   return (
     <>
       <Header />

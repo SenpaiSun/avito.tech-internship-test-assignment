@@ -26,7 +26,6 @@ const LinkFooter = styled(Link)({
   }
 });
 
-
 export const Footer = () => {
   const { colorScheme } = useMantineColorScheme();
 
@@ -40,8 +39,8 @@ export const Footer = () => {
           <Text fw={700} size="lg">
             О сайте
           </Text>
-          {footerProps.map(link => (
-            <LinkFooter to={link.href}>
+          {footerProps.map((link, index) => (
+            <LinkFooter to={link.href} key={index}>
               <Text c={colorScheme === 'dark' ? 'white' : 'black'} size="sm">
                 {link.title}
               </Text>
