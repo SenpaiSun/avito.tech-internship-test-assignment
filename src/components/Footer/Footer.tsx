@@ -1,0 +1,49 @@
+import {
+  Container,
+  DEFAULT_THEME,
+  Flex,
+  Text,
+  useMantineColorScheme
+} from '@mantine/core';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import { footerProps } from '../../utils/constants.ts/constants';
+
+const ContainerFooter = styled(Container)({
+  borderTop: `1px solid ${DEFAULT_THEME.colors.dark[2]}`,
+  position: 'fixed',
+  width: '95%',
+  bottom: 0,
+  left: 0,
+  right: 0,
+  margin: '30px auto',
+});
+const LinkFooter = styled(Link)({
+  textDecoration: 'none'
+});
+
+export const Footer = () => {
+  const { colorScheme } = useMantineColorScheme();
+
+  return (
+    <ContainerFooter fluid >
+      <Flex justify="space-between">
+        <Flex>
+          <Text>© 2024 AvitoCinema</Text>
+        </Flex>
+        <Flex direction={'column'}>
+          <Text fw={700} size="lg">
+            О сайте
+          </Text>
+          {footerProps.map(link => (
+            <LinkFooter to={link.href}>
+              <Text c={colorScheme === 'dark' ? 'white' : 'black'} size="sm" style={{marginLeft: '10px'}}>
+                {link.title}
+              </Text>
+            </LinkFooter>
+          ))}
+        </Flex>
+      </Flex>
+    </ContainerFooter>
+  );
+};
