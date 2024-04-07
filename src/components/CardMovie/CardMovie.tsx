@@ -29,6 +29,7 @@ const ContainerMovies = styled(Container)<{ colorscheme: string, fetching: boole
       : DEFAULT_THEME.colors.gray[1]};
   border-radius: 12px;
   width: 100%;
+  padding: 10px;
   cursor: ${({ fetching }) => (fetching ? 'not-allowed' : 'pointer')};
   opacity: ${({ fetching }) => (fetching ? 0.5 : 1)};
   pointer-events: ${({ fetching }) => (fetching ? 'none' : 'auto')};
