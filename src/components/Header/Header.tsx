@@ -10,9 +10,11 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const ContainerHeader = styled(Container)({
-  margin: '30px 30px',
-  padding: 0,
-  borderBottom: `1px solid ${DEFAULT_THEME.colors.dark[2]}`
+  margin: '0px 0px 30px',
+  padding: '0px 30px',
+  borderBottom: `1px solid ${DEFAULT_THEME.colors.dark[2]}`,
+  position: 'fixed',
+  width: '100%',
 });
 
 export const Header = () => {

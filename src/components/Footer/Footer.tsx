@@ -17,10 +17,15 @@ const ContainerFooter = styled(Container)({
   left: 0,
   right: 0,
   margin: '30px auto',
+  paddingTop: '20px',
 });
 const LinkFooter = styled(Link)({
-  textDecoration: 'none'
+  textDecoration: 'none',
+  '&:hover': {
+    opacity: '0.7',
+  }
 });
+
 
 export const Footer = () => {
   const { colorScheme } = useMantineColorScheme();
@@ -31,13 +36,13 @@ export const Footer = () => {
         <Flex>
           <Text>© 2024 AvitoCinema</Text>
         </Flex>
-        <Flex direction={'column'}>
+        <Flex direction={'column'} gap={'xs'}>
           <Text fw={700} size="lg">
             О сайте
           </Text>
           {footerProps.map(link => (
             <LinkFooter to={link.href}>
-              <Text c={colorScheme === 'dark' ? 'white' : 'black'} size="sm" style={{marginLeft: '10px'}}>
+              <Text c={colorScheme === 'dark' ? 'white' : 'black'} size="sm">
                 {link.title}
               </Text>
             </LinkFooter>
