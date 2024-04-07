@@ -1,10 +1,6 @@
 import { Container, Flex } from '@mantine/core';
 import { FormFilter } from '../../components/FormFilter';
 import styled from 'styled-components';
-import { useGetMoviesQuery } from '../../store/movies/movies.api';
-import { useActions } from '../../hooks/actions';
-import { useAppSelector } from '../../hooks/hooks';
-import { useEffect } from 'react';
 import { CardMovie } from '../../components/CardMovie';
 
 const ContainerMovies = styled(Container)({

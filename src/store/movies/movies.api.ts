@@ -13,11 +13,14 @@ export const api = createApi({
       return headers;
     }
   }),
+  tagTypes: ['Movies'],
   endpoints: (builder) => ({
-    getMovies: builder.query<any, void>({
-      query: () => 'v1.4/movie'
+    getMovies: builder.query<any, { page: number, limit: number }>({
+      query: ({page, limit}) => `v1.4/movie?page=${page}&limit=${limit}`,
+      providesTags: ['Movies']
     })
   })
 });
 
 export const { useGetMoviesQuery } = api
+

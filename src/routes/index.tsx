@@ -18,7 +18,7 @@ const router = createBrowserRouter(
       errorElement={<></>}
     >
       <Route
-        path="/movies"
+        path="/"
         element={<Movies />}
         loader={() => {
           return null;

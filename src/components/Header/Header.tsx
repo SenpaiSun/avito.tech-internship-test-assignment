@@ -20,6 +20,7 @@ const ContainerHeader = styled(Container)<{ colorscheme: string }>`
   background-color: ${({ colorscheme }) => (colorscheme === 'dark' ? DEFAULT_THEME.colors.dark[6] : DEFAULT_THEME.colors.gray[0])};
   position: fixed;
   width: 100%;
+  z-index: 2;
 `;
 
 export const Header = () => {
