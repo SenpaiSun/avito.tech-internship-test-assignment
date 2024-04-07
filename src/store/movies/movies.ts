@@ -1,7 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { Movies } from './type';
 
-const initialState = {
-  movies: [],
+const initialState: Movies = {
+  docs: [],
+  limit: 0,
+  page: 0,
+  pages: 0,
+  total: 0,
 };
 
 export const moviesSlice = createSlice({
@@ -9,7 +14,11 @@ export const moviesSlice = createSlice({
   initialState,
   reducers: {
     setMovies: (state, action) => {
-      state.movies = action.payload;
+      state.docs = action.payload.docs
+      state.limit = action.payload.limit
+      state.page = action.payload.page
+      state.pages = action.payload.pages
+      state.total = action.payload.total
     },
   },
 });

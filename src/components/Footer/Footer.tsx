@@ -11,7 +11,6 @@ import { footerProps } from '../../utils/constants.ts/constants';
 
 const ContainerFooter = styled(Container)({
   borderTop: `1px solid ${DEFAULT_THEME.colors.dark[2]}`,
-  position: 'fixed',
   width: '95%',
   bottom: 0,
   left: 0,

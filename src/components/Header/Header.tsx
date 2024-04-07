@@ -9,19 +9,24 @@ import { DarkLightButton } from '../DarkLightButton';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-const ContainerHeader = styled(Container)({
-  margin: '0px 0px 30px',
-  padding: '0px 30px',
-  borderBottom: `1px solid ${DEFAULT_THEME.colors.dark[2]}`,
-  position: 'fixed',
-  width: '100%',
-});
+const ContainerHeader = styled(Container)<{ colorscheme: string }>`
+  margin: 0px 0px 30px;
+  padding: 0px 30px;
+  border-bottom: 1px solid
+    ${({ colorscheme }) =>
+      colorscheme === 'dark'
+        ? DEFAULT_THEME.colors.dark[4]
+        : DEFAULT_THEME.colors.dark[1]};
+  background-color: ${({ colorscheme }) => (colorscheme === 'dark' ? DEFAULT_THEME.colors.dark[6] : DEFAULT_THEME.colors.gray[0])};
+  position: fixed;
+  width: 100%;
+`;
 
 export const Header = () => {
   const { colorScheme } = useMantineColorScheme();
 
   return (
-    <ContainerHeader h={50} mt={'dm'} fluid>
+    <ContainerHeader h={50} mt={'dm'} fluid colorscheme={colorScheme}>
       <Flex justify="space-between" align="center">
         <Link to="/" style={{ textDecoration: 'none' }}>
           <Title

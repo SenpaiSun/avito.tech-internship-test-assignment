@@ -9,7 +9,7 @@ const ContainerFilter = styled(Container)({
 
 export const FormFilter = () => {
   return (
-    <ContainerFilter w={300} h={200} >
+    <ContainerFilter w={300} h={200} maw={300} >
       <Flex>
 
       </Flex>
