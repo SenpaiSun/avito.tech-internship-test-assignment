@@ -19,6 +19,7 @@ export const moviesSlice = createSlice({
       state.page = action.payload.page
       state.pages = action.payload.pages
       state.total = action.payload.total
+      console.log('Значение установено!', state, action.payload)
     },
   },
 });

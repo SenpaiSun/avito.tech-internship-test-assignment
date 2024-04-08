@@ -3,11 +3,25 @@ import {
   Container,
   Title,
   useMantineColorScheme,
-  DEFAULT_THEME
+  DEFAULT_THEME,
+  Input,
+  Autocomplete,
+  Group,
+  Avatar,
+  AutocompleteProps,
+  Text,
+  Loader,
+  CloseButton
 } from '@mantine/core';
 import { DarkLightButton } from '../DarkLightButton';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { useAppSelector } from '../../hooks/hooks';
+import { useActions } from '../../hooks/actions';
+import { useEffect, useState } from 'react';
+import { useDebouncedSearch } from '../../hooks/debounce';
+import { apiKP } from '../../utils/api';
+const { REACT_APP_API_TOKEN } = process.env;
 
 const ContainerHeader = styled(Container)<{ colorscheme: string }>`
   margin: 0px 0px 30px;
@@ -17,7 +31,10 @@ const ContainerHeader = styled(Container)<{ colorscheme: string }>`
       colorscheme === 'dark'
         ? DEFAULT_THEME.colors.dark[4]
         : DEFAULT_THEME.colors.dark[1]};
-  background-color: ${({ colorscheme }) => (colorscheme === 'dark' ? DEFAULT_THEME.colors.dark[6] : DEFAULT_THEME.colors.gray[0])};
+  background-color: ${({ colorscheme }) =>
+    colorscheme === 'dark'
+      ? DEFAULT_THEME.colors.dark[6]
+      : DEFAULT_THEME.colors.gray[4]};
   position: fixed;
   width: 100%;
   z-index: 2;
@@ -25,6 +42,56 @@ const ContainerHeader = styled(Container)<{ colorscheme: string }>`
 
 export const Header = () => {
   const { colorScheme } = useMantineColorScheme();
+  const searchValue = useAppSelector(state => state.searchResult.searchValue);
+  const state = useAppSelector(state => state);
+  const { setSearchValue, setMovies, setLoader } = useActions();
+  const debouncedSearchValue = useDebouncedSearch(searchValue, 1000);
+  const [value, setValue] = useState('Clear me');
+
+  useEffect(() => {
+    if (searchValue !== '') {
+      setLoader(true);
+      apiKP
+        .searchMoviesForName(
+          debouncedSearchValue,
+          state.filters.page,
+          state.filters.limit
+        )
+        .then(data => {
+          console.log('поиск запрос', data);
+          if (data) {
+            setMovies(data);
+          }
+          setLoader(false);
+        })
+        .catch(error => {
+          console.error('Error fetching data:', error);
+        });
+    }
+    console.log(state.searchResult.result);
+  }, [debouncedSearchValue, state.filters.page, state.filters.limit]);
+
+  const handlerInput = (value: string) => {
+    setValue(value);
+    setSearchValue(value);
+  };
+
+  const handlerInputDelete = () => {
+    setSearchValue('');
+    setLoader(true);
+    apiKP
+      .getMovies(state.filters.page, state.filters.limit)
+      .then(data => {
+        console.log('поиск запрос', data);
+        if (data) {
+          setMovies(data);
+        }
+        setLoader(false);
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  };
 
   return (
     <ContainerHeader h={50} mt={'dm'} fluid colorscheme={colorScheme}>
@@ -38,6 +105,37 @@ export const Header = () => {
             AvitoCinema
           </Title>
         </Link>
+        <Input
+          value={searchValue}
+          onChange={event => handlerInput(event.currentTarget.value)}
+          radius="xl"
+          placeholder="Поиск по названию"
+          w={300}
+          mt={4}
+          rightSectionPointerEvents="all"
+          rightSection={
+            <CloseButton
+              size="sm"
+              aria-label="Clear input"
+              onClick={() => handlerInputDelete()}
+              style={{ display: value ? undefined : 'none' }}
+            />
+          }
+          onKeyDown={event => {
+            if (
+              event.key === 'Enter' &&
+              REACT_APP_API_TOKEN &&
+              searchValue !== ''
+            ) {
+              setLoader(true);
+              apiKP.searchMoviesForName(
+                debouncedSearchValue,
+                state.filters.page,
+                state.filters.limit
+              );
+            }
+          }}
+        />
         <DarkLightButton></DarkLightButton>
       </Flex>
     </ContainerHeader>
