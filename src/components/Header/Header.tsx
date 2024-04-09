@@ -14,7 +14,7 @@ import {
   CloseButton
 } from '@mantine/core';
 import { DarkLightButton } from '../DarkLightButton';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useAppSelector } from '../../hooks/hooks';
 import { useActions } from '../../hooks/actions';
@@ -47,12 +47,13 @@ export const Header = () => {
   const { setSearchValue, setMovies, setLoader } = useActions();
   const debouncedSearchValue = useDebouncedSearch(searchValue, 1000);
   const [value, setValue] = useState('Clear me');
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (searchValue !== '') {
       setLoader(true);
       apiKP
-        .searchMoviesForName(
+        .searchMoviesByName(
           debouncedSearchValue,
           state.filters.page,
           state.filters.limit
@@ -96,7 +97,7 @@ export const Header = () => {
   return (
     <ContainerHeader h={50} mt={'dm'} fluid colorscheme={colorScheme}>
       <Flex justify="space-between" align="center">
-        <Link to="/" style={{ textDecoration: 'none' }}>
+        <Link to="/movies" style={{ textDecoration: 'none' }}>
           <Title
             order={1}
             c={colorScheme === 'dark' ? 'white' : 'black'}
@@ -128,7 +129,7 @@ export const Header = () => {
               searchValue !== ''
             ) {
               setLoader(true);
-              apiKP.searchMoviesForName(
+              apiKP.searchMoviesByName(
                 debouncedSearchValue,
                 state.filters.page,
                 state.filters.limit

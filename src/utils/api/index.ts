@@ -28,9 +28,36 @@ class Api {
       headers: this._headers
     }).then(res => this._checkedError(res));
   }
-  searchMoviesForName(name: string, page: number, limit: number): Promise<any> {
+  searchMoviesByName(name: string, page: number, limit: number): Promise<any> {
     return fetch(
       `${this._url}/v1.4/movie/search?page=${page}&limit=${limit}&query=${name}&sortField=votes.kp`,
+      {
+        method: 'GET',
+        headers: this._headers
+      }
+    ).then(res => this._checkedError(res));
+  }
+  searchMovieById(id: number): Promise<any> {
+    return fetch(
+      `${this._url}/v1.4/movie/${id}`,
+      {
+        method: 'GET',
+        headers: this._headers
+      }
+    ).then(res => this._checkedError(res));
+  }
+  searchReviewByIdMovie(id: number, page: number, limit: number): Promise<any> {
+    return fetch(
+      `${this._url}/v1.4/review?page=${page}&limit=${limit}&selectFields=&movieId=${id}`,
+      {
+        method: 'GET',
+        headers: this._headers
+      }
+    ).then(res => this._checkedError(res));
+  }
+  searchPostersByIdMovie(id: Number, page: number, limit: number): Promise<any> {
+    return fetch(
+      `${this._url}/v1.4/image?page=${page}&limit=${limit}&movieId=${id}`,
       {
         method: 'GET',
         headers: this._headers

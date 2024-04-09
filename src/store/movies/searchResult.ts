@@ -1,10 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { Movie } from './type';
+import { Movie, searchResult } from './type';
 
-const initialState: {searchValue: string, result: Movie[], loader: boolean} = {
+const initialState: searchResult = {
   searchValue: '',
   result: [],
-  loader: false
+  loader: false,
+  currentMovie: {
+    infoMovie: {},
+    posters: [],
+    review: []
+  }
 };
 
 export const searchResultSlice = createSlice({
@@ -19,6 +24,15 @@ export const searchResultSlice = createSlice({
     },
     setLoader: (state, action) => {
       state.loader = action.payload
+    },
+    setCurrentMovie: (state, action) => {
+      state.currentMovie['infoMovie'] = action.payload
+    },
+    setPosters: (state, action) => {
+      state.currentMovie['posters'] = action.payload.docs
+    },
+    setReview: (state, action) => {
+      state.currentMovie['review'] = action.payload.docs
     }
   },
 });

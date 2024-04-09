@@ -6,6 +6,7 @@ import {
 // import * as page from '../pages';
 import { Layout } from '../components/Layout';
 import { Movies } from '../pages';
+import { CurrentFilm } from '../pages/CurrentFilm/CurrentFilm';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -18,13 +19,21 @@ const router = createBrowserRouter(
       errorElement={<></>}
     >
       <Route
-        path="/"
+        path="/movies"
         element={<Movies />}
         loader={() => {
           return null;
         }}
         errorElement={<></>}
-      ></Route>
+      />
+      <Route
+        path="/movie/:id"
+        element={<CurrentFilm />}
+        loader={() => {
+          return null;
+        }}
+        errorElement={<></>}
+      />
     </Route>
   ),
   {

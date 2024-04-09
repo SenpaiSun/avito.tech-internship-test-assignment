@@ -17,6 +17,7 @@ import { Paginations } from '../Paginations';
 import NotFoundImageDark from '../../assets/icons/not-found-dark.svg';
 import NotFoundImageLight from '../../assets/icons/not-found-light.svg';
 import { apiKP } from '../../utils/api';
+import { useNavigate } from 'react-router-dom';
 
 const ContainerMovies = styled(Container)<{
   colorscheme: string;
@@ -55,8 +56,12 @@ export const CardMovie = () => {
   const { colorScheme } = useMantineColorScheme();
   const { setMovies, setLoader } = useActions();
   const filterData = useAppSelector(state => state.filters);
+  const moviesData = useAppSelector(state => state.movies);
+  const searchData = useAppSelector(state => state.searchResult);
+  const navigate = useNavigate();
   useEffect(() => {
-    setLoader(true);
+    if(searchData.searchValue === '') {
+      setLoader(true);
     apiKP
       .getMovies(filterData.page, filterData.limit)
       .then(data => {
@@ -69,10 +74,10 @@ export const CardMovie = () => {
       .catch(error => {
         console.error('Error fetching data:', error);
       });
+    }
   }, [filterData.page, filterData.limit]);
 
-  const moviesData = useAppSelector(state => state.movies);
-  const searchData = useAppSelector(state => state.searchResult);
+
   console.log(searchData, moviesData);
 
   return (
@@ -95,6 +100,7 @@ export const CardMovie = () => {
               colorscheme={colorScheme}
               loader={searchData.loader ? 'true' : 'false'}
               key={index}
+              onClick={() => {navigate(`/movie/${movie.id}`)}}
             >
               <Flex direction={'row'} justify={'space-between'} gap={'xs'}>
                 <Image

@@ -7,7 +7,7 @@ import {
 } from '@mantine/core';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { footerProps } from '../../utils/constants.ts/constants';
+import { footerProps } from './constants';
 
 const ContainerFooter = styled(Container)({
   borderTop: `1px solid ${DEFAULT_THEME.colors.dark[2]}`,
