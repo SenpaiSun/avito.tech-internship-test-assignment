@@ -33,6 +33,7 @@ export const CurrentFilm = () => {
   const actors = currentFilm.currentMovie.infoMovie?.persons
   const seriesData = currentFilm.series
   const episodes = currentFilm.series.flatMap(series => series.episodes);
+  const isSeries = currentFilm.currentMovie.infoMovie.isSeries
 
   return (
     <Container fluid pt={'120px'}>
@@ -51,11 +52,11 @@ export const CurrentFilm = () => {
             }
             title={'АКТЕРЫ:'}
           />
-          {currentFilm.currentMovie.infoMovie.isSeries && (<PaginationItems
+          {isSeries && (<PaginationItems
             items={seriesData}
             title={'СПИСОК СЕЗОНОВ'}
           />)}
-          {currentFilm.currentMovie.infoMovie.isSeries && (<PaginationItems
+          {isSeries && (<PaginationItems
             items={episodes}
             title={'СПИСОК СЕРИЙ'}
           />)}

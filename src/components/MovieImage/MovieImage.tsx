@@ -20,7 +20,7 @@ export const MovieImage = (props: MovieImageProps) => {
   return (
     <>
      {posters && (
-          <Carousel pb={'50px'} withIndicators w={400} height={350}>{firstSlide}{otherSlides}</Carousel>
+          <Carousel loop pb={'50px'} withIndicators w={400} h={350}>{firstSlide}{otherSlides}</Carousel>
         )}
     </>
   );
