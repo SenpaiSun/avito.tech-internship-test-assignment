@@ -2,18 +2,25 @@ import { Pagination } from '@mantine/core';
 import { useAppSelector } from '../../hooks/hooks';
 import { useActions } from '../../hooks/actions';
 
-export const Paginations = () => {
-  const moviesData = useAppSelector(state => state.movies);
-  const filterData = useAppSelector(state => state.filters);
+interface PaginationsProps {
+  value: number
+  total: number
+  onChangePage?: (e: number) => void
+  size?: string
+}
+
+export const Paginations = (props: PaginationsProps) => {
+  const { value, total, onChangePage, size } = props;
   const { setPage } = useActions();
   const handlerPagination = (e: number) => {
-    setPage(e)
+    onChangePage ? onChangePage(e) : setPage(e)
   }
   return (
     <Pagination
-      value={filterData.page}
+      size={size ? 'xs' : 'default'}
+      value={value}
       onChange={handlerPagination}
-      total={moviesData?.pages}
+      total={total}
       mt="xs"
       style={{ marginLeft: 'auto', marginRight: 'auto' }}
     />

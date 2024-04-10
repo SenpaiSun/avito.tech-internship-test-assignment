@@ -7,20 +7,20 @@ export const MovieImage = (props: MovieImageProps) => {
 
   const firstSlide = (
     <Carousel.Slide key="preview">
-      <Image w={280} h={300} m={'0 auto'} src={prewievUrl} />
+      <Image w={280} h={350} m={'0 auto'} src={prewievUrl} />
     </Carousel.Slide>
   );
 
   const otherSlides = posters.map((item, index) => (
-    <Carousel.Slide key={index}>
-      <Image w={280} h={300} m={'0 auto'} src={item.url} />
+    <Carousel.Slide key={index} >
+      <Image w={280} h={350} m={'0 auto'} src={item.url} />
     </Carousel.Slide>
   ));
 
   return (
     <>
      {posters && (
-          <Carousel withIndicators w={400} height={350}>{firstSlide}{otherSlides}</Carousel>
+          <Carousel pb={'50px'} withIndicators w={400} height={350}>{firstSlide}{otherSlides}</Carousel>
         )}
     </>
   );

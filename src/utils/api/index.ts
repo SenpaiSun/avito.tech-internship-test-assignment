@@ -64,6 +64,15 @@ class Api {
       }
     ).then(res => this._checkedError(res));
   }
+  searchSeriesByIdMovie(id: Number, page: number, limit: number): Promise<any> {
+    return fetch(
+      `${this._url}/v1.4/season?page=${page}&limit=${limit}&movieId=${id}`,
+      {
+        method: 'GET',
+        headers: this._headers
+      }
+    ).then(res => this._checkedError(res));
+  }
 }
 const { REACT_APP_API_TOKEN } = process.env;
 

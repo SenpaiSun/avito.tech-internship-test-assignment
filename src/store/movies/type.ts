@@ -92,7 +92,7 @@ type SpokenLanguage = {
   nameEn: string;
 };
 
-type Person = {
+export type Person = {
   id: number;
   photo: string;
   name: string;
@@ -232,9 +232,46 @@ export type currentMovie = {
   review: Review[];
 }
 
+type Still = {
+  url: string;
+  previewUrl: string;
+}
+
+export type Episode = {
+  number: number;
+  name: string;
+  enName: string;
+  still: Still;
+  duration: number;
+  date: Date | null;
+  description: string;
+  airDate: Date;
+  enDescription: string;
+}
+
+
+
+export type MovieEpisode = {
+  movieId: number;
+  number: number;
+  episodesCount: number;
+  episodes: Episode[];
+  airDate: Date;
+  description: string;
+  duration: number;
+  enDescription: string;
+  enName: string;
+  name: string;
+  poster: Poster;
+  updatedAt: Date;
+  source: string;
+  id: string;
+}
+
 export type searchResult = {
   searchValue: string,
   result: Movie[],
   loader: boolean,
   currentMovie: currentMovie
+  series: MovieEpisode[]
 }

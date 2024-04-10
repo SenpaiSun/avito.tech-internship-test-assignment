@@ -127,7 +127,7 @@ export const CardMovie = () => {
                       ? `, ` + movie.year
                       : ''}{' '}
                     {movie.movieLength && movie.movieLength !== 0
-                      ? `, ` + movie.movieLength + `мин.`
+                      ? `, ` + movie.movieLength + ` мин.`
                       : ''}
                   </Text>
                   <Text size="xs">
@@ -160,7 +160,7 @@ export const CardMovie = () => {
             color={colorScheme === 'dark' ? 'white' : 'black'}
           />
         )}
-        <Paginations />
+        <Paginations value={filterData.page} total={moviesData?.pages}/>
       </Flex>
     </Container>
   );
