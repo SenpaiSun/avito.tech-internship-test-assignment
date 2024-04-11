@@ -1,8 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  page: 1,
-  limit: 10
+  searchFilters: {
+    page: 1,
+    limit: 10
+  },
+  reviewFilters: {
+    page: 1,
+    limit: 1
+  }
 };
 
 export const filtersSlice = createSlice({
@@ -10,10 +16,10 @@ export const filtersSlice = createSlice({
   initialState,
   reducers: {
     setPage: (state, action) => {
-      state.page = action.payload
-    },
-  },
+      state.searchFilters.page = action.payload;
+    }
+  }
 });
 
 export const filtersActions = filtersSlice.actions;
-export const filtersReducer = filtersSlice.reducer
+export const filtersReducer = filtersSlice.reducer;

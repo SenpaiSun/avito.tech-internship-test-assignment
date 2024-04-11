@@ -13,15 +13,17 @@ import {
   Person,
   MovieEpisode,
   currentMovie,
-  Episode
+  Episode,
+  Review
 } from '../../store/movies/type';
 import NotFoundImageDark from '../../assets/icons/not-found-dark.svg';
 import NotFoundImageLight from '../../assets/icons/not-found-light.svg';
 import { Paginations } from '../Paginations';
 import { useEffect, useState } from 'react';
+import { MockImage } from '../../assets/icons/MockImage';
 
 export type PaginationProps = {
-  items: Person[] | MovieEpisode[] | Episode[] | undefined;
+  items: Person[] | MovieEpisode[] | Episode[] | Review[] | undefined;
   title: string;
 };
 
@@ -32,40 +34,42 @@ export const PaginationItems = (props: PaginationProps) => {
   const itemsPerPage = 10;
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
+  console.log(items);
 
-  const [dataPagination, setDataPagination] = useState<JSX.Element[] | undefined>(undefined);
+  const [dataPagination, setDataPagination] = useState<
+    JSX.Element[] | undefined
+  >(undefined);
   useEffect(() => {
     if (items !== undefined && items.length > 0) {
       const newDataPagination = items
         ?.slice(startIndex, endIndex)
         .map((item, index) => {
           let photoUrl: string | undefined;
+          let name: string | undefined;
+          console.log(name, photoUrl);
           if ('photo' in item) {
             photoUrl = item.photo;
-          } else if ('poster' in item && item.poster?.url) {
+            name = item.name;
+          } else if ('episodesCount' in item) {
             photoUrl = item.poster?.url;
-          } else if ('still' in item && item.still?.url) {
+            name = item.name;
+          } else if ('description' in item) {
             photoUrl = item.still?.url;
+            name = item.name;
           }
           return (
             <Tooltip
-              label={item.name ? item.name : 'Неизвестно'}
+              label={name ? name : 'Неизвестно'}
               position="bottom"
               key={index}
             >
               <Flex direction={'column'}>
                 <Flex w={'100%'}>
                   <Image
-                    m={'0 0'}
+                    m={'0 auto'}
                     w={title === 'СПИСОК СЕРИЙ' ? '7vw' : '5vw'}
                     h={title === 'СПИСОК СЕРИЙ' ? '4vw' : '8vw'}
-                    src={
-                      photoUrl
-                        ? photoUrl
-                        : colorScheme === 'dark'
-                          ? NotFoundImageLight
-                          : NotFoundImageDark
-                    }
+                    src={photoUrl ? photoUrl : (title === 'СПИСОК СЕРИЙ' ? (colorScheme === 'dark' ? NotFoundImageLight : NotFoundImageDark) : MockImage())}
                     fit="cover"
                   />
                 </Flex>
@@ -76,13 +80,13 @@ export const PaginationItems = (props: PaginationProps) => {
                   lineClamp={1}
                   style={{ cursor: 'pointer' }}
                 >
-                  {item.name ? item.name : 'Неизвестно'}
+                  {name ? name : 'Неизвестно'}
                 </Text>
               </Flex>
             </Tooltip>
           );
         });
-        setDataPagination(newDataPagination);
+      setDataPagination(newDataPagination);
     }
   }, [colorScheme, endIndex, items, startIndex, title]);
   return (

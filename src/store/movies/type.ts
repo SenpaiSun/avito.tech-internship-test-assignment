@@ -127,7 +127,7 @@ type Video = {
   type: "TRAILER";
 };
 
-type SimilarMovie = {
+export type SimilarMovie = {
   id: number;
   name: string;
   enName: string | null;
@@ -212,7 +212,7 @@ export type Posters = {
   id: string;
 }
 
-type Review = {
+export type Review = {
   id: number;
   movieId: number;
   title: string;
@@ -226,10 +226,18 @@ type Review = {
   updatedAt: string;
 }
 
+export type ReviewsInfo = {
+  docs: Review[]
+  limit: number
+  page: number
+  pages: number
+  total: number
+}
+
 export type currentMovie = {
   infoMovie: Partial<infoMovie>;
   posters: Posters[];
-  review: Review[];
+  review: ReviewsInfo;
 }
 
 type Still = {

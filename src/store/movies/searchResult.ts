@@ -8,7 +8,13 @@ const initialState: searchResult = {
   currentMovie: {
     infoMovie: {},
     posters: [],
-    review: []
+    review: {
+      docs: [],
+      limit: 1,
+      page: 1,
+      pages: 0,
+      total: 0
+    }
   },
   series: [],
 };
@@ -33,10 +39,13 @@ export const searchResultSlice = createSlice({
       state.currentMovie['posters'] = action.payload.docs
     },
     setReview: (state, action) => {
-      state.currentMovie['review'] = action.payload.docs
+      state.currentMovie['review'] = action.payload
     },
     setSeries: (state, action) => {
       state.series = action.payload.docs
+    },
+    setPageReview: (state, action) => {
+      state.currentMovie['review']['page'] = action.payload
     }
   },
 });

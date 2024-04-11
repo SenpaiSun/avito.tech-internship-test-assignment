@@ -3,21 +3,20 @@ import { useAppSelector } from '../../hooks/hooks';
 import { useActions } from '../../hooks/actions';
 
 interface PaginationsProps {
-  value: number
-  total: number
-  onChangePage?: (e: number) => void
-  size?: string
+  value: number;
+  total: number;
+  onChangePage: (e: number) => void;
+  size?: string;
 }
 
 export const Paginations = (props: PaginationsProps) => {
   const { value, total, onChangePage, size } = props;
-  const { setPage } = useActions();
   const handlerPagination = (e: number) => {
-    onChangePage ? onChangePage(e) : setPage(e)
-  }
+    onChangePage(e)
+  };
   return (
     <Pagination
-      size={size ? 'xs' : 'default'}
+      size={size ? 'xs' : 'sm'}
       value={value}
       onChange={handlerPagination}
       total={total}

@@ -17,7 +17,7 @@ import { Paginations } from '../Paginations';
 import NotFoundImageDark from '../../assets/icons/not-found-dark.svg';
 import NotFoundImageLight from '../../assets/icons/not-found-light.svg';
 import { apiKP } from '../../utils/api';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const ContainerMovies = styled(Container)<{
   colorscheme: string;
@@ -54,7 +54,7 @@ const ContainerMovies = styled(Container)<{
 
 export const CardMovie = () => {
   const { colorScheme } = useMantineColorScheme();
-  const { setMovies, setLoader } = useActions();
+  const { setMovies, setLoader, setPage } = useActions();
   const filterData = useAppSelector(state => state.filters);
   const moviesData = useAppSelector(state => state.movies);
   const searchData = useAppSelector(state => state.searchResult);
@@ -63,7 +63,7 @@ export const CardMovie = () => {
     if(searchData.searchValue === '') {
       setLoader(true);
     apiKP
-      .getMovies(filterData.page, filterData.limit)
+      .getMovies(filterData.searchFilters.page, filterData.searchFilters.limit)
       .then(data => {
         console.log('поиск запрос', data);
         if (data) {
@@ -75,7 +75,7 @@ export const CardMovie = () => {
         console.error('Error fetching data:', error);
       });
     }
-  }, [filterData.page, filterData.limit]);
+  }, [filterData.searchFilters.page, filterData.searchFilters.limit]);
 
 
   console.log(searchData, moviesData);
@@ -160,7 +160,7 @@ export const CardMovie = () => {
             color={colorScheme === 'dark' ? 'white' : 'black'}
           />
         )}
-        <Paginations value={filterData.page} total={moviesData?.pages}/>
+        <Paginations onChangePage={setPage} value={filterData.searchFilters.page} total={moviesData?.pages}/>
       </Flex>
     </Container>
   );

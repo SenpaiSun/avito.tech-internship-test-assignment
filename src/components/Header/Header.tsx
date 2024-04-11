@@ -55,8 +55,8 @@ export const Header = () => {
       apiKP
         .searchMoviesByName(
           debouncedSearchValue,
-          state.filters.page,
-          state.filters.limit
+          state.filters.searchFilters.page,
+          state.filters.searchFilters.limit
         )
         .then(data => {
           console.log('поиск запрос', data);
@@ -70,7 +70,7 @@ export const Header = () => {
         });
     }
     console.log(state.searchResult.result);
-  }, [debouncedSearchValue, state.filters.page, state.filters.limit]);
+  }, [debouncedSearchValue, state.filters.searchFilters.page, state.filters.searchFilters.limit]);
 
   const handlerInput = (value: string) => {
     setValue(value);
@@ -81,7 +81,7 @@ export const Header = () => {
     setSearchValue('');
     setLoader(true);
     apiKP
-      .getMovies(state.filters.page, state.filters.limit)
+      .getMovies(state.filters.searchFilters.page, state.filters.searchFilters.limit)
       .then(data => {
         console.log('поиск запрос', data);
         if (data) {
@@ -131,8 +131,8 @@ export const Header = () => {
               setLoader(true);
               apiKP.searchMoviesByName(
                 debouncedSearchValue,
-                state.filters.page,
-                state.filters.limit
+                state.filters.searchFilters.page,
+                state.filters.searchFilters.limit
               );
             }
           }}
