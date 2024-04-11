@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { Movie, searchResult } from './type';
+import { Movie, SearchResult } from './type';
 
-const initialState: searchResult = {
+const initialState: SearchResult = {
   searchValue: '',
   result: [],
   loader: false,

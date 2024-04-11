@@ -26,7 +26,6 @@ export const PaginationItems = (props: PaginationProps) => {
   const itemsPerPage = 10;
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  console.log(items);
 
   const [dataPagination, setDataPagination] = useState<
     JSX.Element[] | undefined
@@ -38,7 +37,6 @@ export const PaginationItems = (props: PaginationProps) => {
         .map((item, index) => {
           let photoUrl: string | undefined;
           let name: string | undefined;
-          console.log(name, photoUrl);
           if ('photo' in item) {
             photoUrl = item.photo;
             name = item.name;
@@ -53,7 +51,7 @@ export const PaginationItems = (props: PaginationProps) => {
             <Tooltip
               label={name ? name : 'Неизвестно'}
               position="bottom"
-              key={index}
+              key={`${index}-${title}`}
             >
               <Flex direction={'column'}>
                 <Flex w={'100%'}>
@@ -88,11 +86,10 @@ export const PaginationItems = (props: PaginationProps) => {
         });
       setDataPagination(newDataPagination);
     } else {
-      setDataPagination([<Text>Нет данных</Text>]);
+      setDataPagination([<Text key={`no-data-${title}`}>Нет данных</Text>]);
     }
   }, [colorScheme, endIndex, items, startIndex, title]);
 
-  console.log(title, dataPagination);
   return (
     <Container m={'0 auto'} p={'0 0'}>
       <Flex

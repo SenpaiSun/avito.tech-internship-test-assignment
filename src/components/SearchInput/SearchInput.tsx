@@ -14,6 +14,7 @@ export const SearchInput = () => {
   const debouncedSearchValue = useDebouncedSearch(searchValue, 1000);
   const [value, setValue] = useState('Clear me');
   const navigate = useNavigate();
+  console.log(state)
 
   useEffect(() => {
     if (searchValue !== '') {
@@ -25,7 +26,6 @@ export const SearchInput = () => {
           state.filters.searchFilters.limit
         )
         .then(data => {
-          console.log('поиск запрос', data);
           if (data) {
             setMovies(data);
           }
@@ -36,7 +36,6 @@ export const SearchInput = () => {
           console.error('Error fetching data:', error);
         });
     }
-    console.log(state.searchResult.result);
   }, [debouncedSearchValue, state.filters.searchFilters.page, state.filters.searchFilters.limit]);
 
   const handlerInput = (value: string) => {
@@ -50,7 +49,6 @@ export const SearchInput = () => {
     apiKP
       .getMovies(state.filters.searchFilters.page, state.filters.searchFilters.limit)
       .then(data => {
-        console.log('поиск запрос', data);
         if (data) {
           setMovies(data);
         }

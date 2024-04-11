@@ -5,7 +5,6 @@ const { REACT_APP_API_TOKEN } = process.env
 
 export const Layout = () => {
   const token = REACT_APP_API_TOKEN
-  console.log(token)
   return (
     <>
       <Header />

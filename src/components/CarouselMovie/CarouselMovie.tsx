@@ -35,6 +35,8 @@ export const CarouselMovie = (props: CarouselMovieProps) => {
         </Tooltip>
       ));
       setSimilarMovies(slidersSimilar);
+    } else {
+      setSimilarMovies(undefined); // Обнуляем similarMovies
     }
   }, [items, navigate]);
 
@@ -46,7 +48,7 @@ export const CarouselMovie = (props: CarouselMovieProps) => {
       {similarMovies && similarMovies.length > 0 ? <Carousel
         withIndicators
         slideSize="33.333333%"
-        slideGap="0"
+        slideGap="10px"
         loop
         align="start"
         slidesToScroll={3}

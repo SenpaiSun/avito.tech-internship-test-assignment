@@ -1,9 +1,12 @@
 import {
+  Button,
+  ComboboxItem,
   Container,
   DEFAULT_THEME,
   Flex,
   Image,
   Loader,
+  Select,
   Space,
   Text,
   Title,
@@ -36,12 +39,9 @@ const ContainerMovies = styled(Container)<{
   border-radius: 12px;
   width: 100%;
   padding: 10px;
-  cursor: ${({ loader }) =>
-    loader === 'true' ? 'not-allowed' : 'pointer'};
-  opacity: ${({ loader }) =>
-     loader === 'true' ? 0.5 : 1};
-  pointer-events: ${({ loader }) =>
-    loader === 'true' ? 'none' : 'auto'};
+  cursor: ${({ loader }) => (loader === 'true' ? 'not-allowed' : 'pointer')};
+  opacity: ${({ loader }) => (loader === 'true' ? 0.5 : 1)};
+  pointer-events: ${({ loader }) => (loader === 'true' ? 'none' : 'auto')};
   transition: all 0.2s;
 
   &:hover {
@@ -54,44 +54,51 @@ const ContainerMovies = styled(Container)<{
 
 export const CardMovie = () => {
   const { colorScheme } = useMantineColorScheme();
-  const { setMovies, setLoader, setPage } = useActions();
+  const { setMovies, setLoader, setPage, setLimit } = useActions();
   const filterData = useAppSelector(state => state.filters);
   const moviesData = useAppSelector(state => state.movies);
   const searchData = useAppSelector(state => state.searchResult);
   const navigate = useNavigate();
   useEffect(() => {
-    if(searchData.searchValue === '') {
+    if (searchData.searchValue === '') {
       setLoader(true);
-    apiKP
-      .getMovies(filterData.searchFilters.page, filterData.searchFilters.limit)
-      .then(data => {
-        console.log('поиск запрос', data);
-        if (data) {
-          setMovies(data);
-        }
-        setLoader(false);
-      })
-      .catch(error => {
-        console.error('Error fetching data:', error);
-      });
+      apiKP
+        .getMovies(
+          filterData.searchFilters.page,
+          filterData.searchFilters.limit
+        )
+        .then(data => {
+          if (data) {
+            setMovies(data);
+          }
+          setLoader(false);
+        })
+        .catch(error => {
+          console.error('Error fetching data:', error);
+        });
     }
-  }, [filterData.searchFilters.page, filterData.searchFilters.limit]);
+  }, [filterData.searchFilters.page, filterData.searchFilters.limit, filterData.searchFilters.year, filterData.searchFilters.genres, filterData.searchFilters.countries, filterData.searchFilters.ageRating]);
 
-
-  console.log(searchData, moviesData);
+  const handlerChangeLimit = (value: string | null, option: ComboboxItem | null) => {
+    if (value !== null && option !== null) {
+      setLimit(Number(value));
+    }
+  }
 
   return (
     <Container fluid w={'100%'} maw={800} mih={800}>
-      <Title
-        order={1}
+      <Flex
         style={{
           paddingBottom: '30px',
           marginBottom: '30px',
           borderBottom: `1px solid ${DEFAULT_THEME.colors.dark[2]}`
         }}
+        justify={'space-between'}
+        align={'center'}
       >
-        ФИЛЬМЫ И СЕРИАЛЫ:
-      </Title>
+        <Title order={1}>ФИЛЬМЫ И СЕРИАЛЫ:</Title>
+        <Select value={filterData.searchFilters.limit.toString()} onChange={handlerChangeLimit} placeholder="Показывать по" data={['10', '25', '50']} w={'160px'}></Select>
+      </Flex>
 
       <Flex direction={'column'} gap={'xs'}>
         {moviesData && moviesData.docs && moviesData.docs.length ? (
@@ -100,7 +107,9 @@ export const CardMovie = () => {
               colorscheme={colorScheme}
               loader={searchData.loader ? 'true' : 'false'}
               key={index}
-              onClick={() => {navigate(`/movie/${movie.id}`)}}
+              onClick={() => {
+                navigate(`/movie/${movie.id}`);
+              }}
             >
               <Flex direction={'row'} justify={'space-between'} gap={'xs'}>
                 <Image
@@ -122,10 +131,8 @@ export const CardMovie = () => {
                     {movie.name}
                   </Text>
                   <Text size="xs">
-                    {movie.alternativeName && movie.alternativeName}
-                    {movie.year && movie.year !== 0
-                      ? `, ` + movie.year
-                      : ''}{' '}
+                    {movie.alternativeName && movie.alternativeName + `, `}
+                    {movie.year && movie.year !== 0 ? movie.year : ''}{' '}
                     {movie.movieLength && movie.movieLength !== 0
                       ? `, ` + movie.movieLength + ` мин.`
                       : ''}
@@ -160,7 +167,11 @@ export const CardMovie = () => {
             color={colorScheme === 'dark' ? 'white' : 'black'}
           />
         )}
-        <Paginations onChangePage={setPage} value={filterData.searchFilters.page} total={moviesData?.pages}/>
+        <Paginations
+          onChangePage={setPage}
+          value={filterData.searchFilters.page}
+          total={moviesData?.pages}
+        />
       </Flex>
     </Container>
   );

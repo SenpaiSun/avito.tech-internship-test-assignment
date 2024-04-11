@@ -8,12 +8,13 @@ import { useEffect } from 'react';
 import { MovieImage } from '../../components/MovieImage';
 import { FilmInfo } from '../../components/FilmInfo/FilmInfo';
 import { PaginationItems } from '../../components/PaginationItems';
-import { PaginationReview } from '../../PaginationReview';
+import { PaginationReview } from '../../components/PaginationReview';
 import { CarouselMovie } from '../../components/CarouselMovie';
 
 export const CurrentFilm = () => {
   const { setCurrentMovie, setPosters, setReview, setSeries } = useActions();
   const currentFilm = useAppSelector(state => state.searchResult);
+  const searchUrl = useAppSelector(state => state.filters.searchUrl);
   const { id } = useParams();
   const navigate = useNavigate();
   useEffect(() => {
@@ -23,20 +24,22 @@ export const CurrentFilm = () => {
       const posters = await apiKP.searchPostersByIdMovie(Number(id), 1, 10);
       setPosters(posters);
       const series = await apiKP.searchSeriesByIdMovie(Number(id), 1, 10);
-      console.log(series);
       setSeries(series);
     };
 
     fetchData();
   }, [navigate, id]);
-  console.log(currentFilm, navigate, id);
 
   useEffect(() => {
     const fetchReview = async () => {
-      const review = await apiKP.searchReviewByIdMovie(Number(id), currentFilm.currentMovie.review.page, currentFilm.currentMovie.review.limit);
+      const review = await apiKP.searchReviewByIdMovie(
+        Number(id),
+        currentFilm.currentMovie.review.page,
+        currentFilm.currentMovie.review.limit
+      );
       setReview(review);
-    }
-    fetchReview()
+    };
+    fetchReview();
   }, [currentFilm.currentMovie.review.page, navigate, id]);
 
   const actors = currentFilm.currentMovie.infoMovie?.persons;
@@ -44,13 +47,21 @@ export const CurrentFilm = () => {
   const episodes = currentFilm.series.flatMap(series => series.episodes);
   const isSeries = currentFilm.currentMovie.infoMovie.isSeries;
   const review = currentFilm.currentMovie.review.docs;
-  const similarMuvies = currentFilm.currentMovie.infoMovie.similarMovies;
-  console.log(review)
+  const similarMovies = currentFilm.currentMovie.infoMovie.similarMovies;
 
+console.log(searchUrl)
   return (
     <Container fluid pt={'120px'}>
       <Flex direction={'column'} justify={'center'}>
-        <Button bg={DEFAULT_THEME.colors.gray[6]} w={'100px'} h={'30px'} onClick={() => navigate('/movies')} m={'0 0 50px 60px'}>Назад</Button>
+        <Button
+          bg={DEFAULT_THEME.colors.gray[6]}
+          w={'100px'}
+          h={'30px'}
+          onClick={() => navigate(searchUrl)}
+          m={'0 0 50px 60px'}
+        >
+          Назад
+        </Button>
         <Flex pb={'50px'}>
           <MovieImage
             posters={currentFilm.currentMovie.posters}
@@ -67,7 +78,7 @@ export const CurrentFilm = () => {
             <PaginationItems items={episodes} title={'СПИСОК СЕРИЙ'} />
           )}
           <PaginationReview items={review} title={'Отзывы пользователей:'} />
-          <CarouselMovie items={similarMuvies} title={'Похожие фильмы'}/>
+          <CarouselMovie items={similarMovies} title={'Похожие фильмы'} />
         </Flex>
       </Flex>
     </Container>

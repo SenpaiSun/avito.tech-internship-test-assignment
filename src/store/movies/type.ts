@@ -276,10 +276,30 @@ export type MovieEpisode = {
   id: string;
 }
 
-export type searchResult = {
+export type SearchResult = {
   searchValue: string,
   result: Movie[],
   loader: boolean,
   currentMovie: currentMovie
   series: MovieEpisode[]
+}
+
+export type SearchFilters = {
+  page: number
+  limit: number
+  year: string
+  genres: string
+  countries: string
+  ageRating: string
+}
+
+type ReviewFilters = {
+  page: number
+  limit: number
+}
+
+export type Filters = {
+  searchFilters: SearchFilters
+  reviewFilters: ReviewFilters
+  searchUrl: string
 }

@@ -22,8 +22,14 @@ class Api {
     });
   }
 
+  private _getQueryParams(): string {
+    const searchParams = new URLSearchParams(window.location.search);
+    return searchParams.toString();
+  }
+
   getMovies(page: number, limit: number): Promise<any> {
-    return fetch(`${this._url}/v1.4/movie?page=${page}&limit=${limit}`, {
+    const queryParams = this._getQueryParams();
+    return fetch(`${this._url}/v1.4/movie?page=${page}&limit=${limit}${queryParams ? '&' + queryParams : ''}`, {
       method: 'GET',
       headers: this._headers
     }).then(res => this._checkedError(res));
