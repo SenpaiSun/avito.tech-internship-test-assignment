@@ -1,4 +1,4 @@
-import { Container, Flex } from '@mantine/core';
+import { Container, Flex, Button, DEFAULT_THEME } from '@mantine/core';
 import '@mantine/carousel/styles.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import { apiKP } from '../../utils/api';
@@ -50,6 +50,7 @@ export const CurrentFilm = () => {
   return (
     <Container fluid pt={'120px'}>
       <Flex direction={'column'} justify={'center'}>
+        <Button bg={DEFAULT_THEME.colors.gray[6]} w={'100px'} h={'30px'} onClick={() => navigate('/movies')} m={'0 0 50px 60px'}>Назад</Button>
         <Flex pb={'50px'}>
           <MovieImage
             posters={currentFilm.currentMovie.posters}
