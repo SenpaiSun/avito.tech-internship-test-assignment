@@ -94,6 +94,10 @@ export const PaginationReview = (props: PaginationReviewProps) => {
           );
         });
       setDataPagination(newDataPagination);
+    } else {
+      setDataPagination([
+        <Text>Нет отзывов</Text>
+      ])
     }
   }, [colorScheme, items, title]);
 

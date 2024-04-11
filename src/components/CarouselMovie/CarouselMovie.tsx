@@ -3,6 +3,7 @@ import { SimilarMovie } from '../../store/movies/type';
 import { Container, Title, Image, Tooltip, Flex } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import {Text} from '@mantine/core';
 
 type CarouselMovieProps = {
   title: string;
@@ -39,10 +40,10 @@ export const CarouselMovie = (props: CarouselMovieProps) => {
 
   return (
     <Container>
-      <Title m={'0 auto 30px'} w={'max-content'}>
+      <Title m={'0 auto 30px'} w={'max-content'} order={2}>
         {title}
       </Title>
-      <Carousel
+      {similarMovies && similarMovies.length > 0 ? <Carousel
         withIndicators
         slideSize="33.333333%"
         slideGap="0"
@@ -52,7 +53,7 @@ export const CarouselMovie = (props: CarouselMovieProps) => {
         controlsOffset="sl"
       >
         {similarMovies}
-      </Carousel>
+      </Carousel> : <Text m={'0 auto'} w={'max-content'}>Нет информации</Text>}
     </Container>
   );
 };

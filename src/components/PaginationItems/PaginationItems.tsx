@@ -1,21 +1,13 @@
 import {
-  Button,
   Container,
   Flex,
   Image,
-  Popover,
   Text,
   Title,
   Tooltip,
   useMantineColorScheme
 } from '@mantine/core';
-import {
-  Person,
-  MovieEpisode,
-  currentMovie,
-  Episode,
-  Review
-} from '../../store/movies/type';
+import { Person, MovieEpisode, Episode, Review } from '../../store/movies/type';
 import NotFoundImageDark from '../../assets/icons/not-found-dark.svg';
 import NotFoundImageLight from '../../assets/icons/not-found-light.svg';
 import { Paginations } from '../Paginations';
@@ -69,7 +61,15 @@ export const PaginationItems = (props: PaginationProps) => {
                     m={'0 auto'}
                     w={title === 'СПИСОК СЕРИЙ' ? '7vw' : '5vw'}
                     h={title === 'СПИСОК СЕРИЙ' ? '4vw' : '8vw'}
-                    src={photoUrl ? photoUrl : (title === 'СПИСОК СЕРИЙ' ? (colorScheme === 'dark' ? NotFoundImageLight : NotFoundImageDark) : MockImage())}
+                    src={
+                      photoUrl
+                        ? photoUrl
+                        : title === 'СПИСОК СЕРИЙ'
+                          ? colorScheme === 'dark'
+                            ? NotFoundImageLight
+                            : NotFoundImageDark
+                          : MockImage()
+                    }
                     fit="cover"
                   />
                 </Flex>
@@ -87,8 +87,12 @@ export const PaginationItems = (props: PaginationProps) => {
           );
         });
       setDataPagination(newDataPagination);
+    } else {
+      setDataPagination([<Text>Нет данных</Text>]);
     }
   }, [colorScheme, endIndex, items, startIndex, title]);
+
+  console.log(title, dataPagination);
   return (
     <Container m={'0 auto'} p={'0 0'}>
       <Flex
@@ -101,7 +105,11 @@ export const PaginationItems = (props: PaginationProps) => {
           {title}
         </Title>
         <Flex direction={'column'} justify={'space-between'}>
-          <Flex gap={'20px'}>{dataPagination}</Flex>
+          {dataPagination && dataPagination.length > 0 ? (
+            <Flex gap={'20px'}>{dataPagination}</Flex>
+          ) : (
+            <Text>Нет данных</Text>
+          )}
           {items && items.length > 10 && (
             <Paginations
               value={currentPage}

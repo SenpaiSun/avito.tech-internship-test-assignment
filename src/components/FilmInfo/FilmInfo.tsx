@@ -25,17 +25,17 @@ export const FilmInfo = (props: FilmInfoProps) => {
     <Flex justify={'space-between'} direction={'row'} w={'100%'}>
       <Flex direction={'column'} ml={'20px'}>
         <Title order={1} size="h1" fw={700}>
-          {infoMovie.name} ({infoMovie.year})
+          {infoMovie.name} {infoMovie.year ? '(' + infoMovie.year + ')' : ''}
         </Title>
         <Text ml={'10px'} fs="italic" mb={'20px'}>
           {infoMovie.alternativeName} &emsp;
-          {infoMovie.ageRating}+
+          {infoMovie.ageRating ? infoMovie.ageRating + '+' : ''}
         </Text>
         {movieInfo.map((item, index) => (
           <Flex key={index} gap={'xs'} direction={'row'}>
             <Text>
               <span style={{ color: colorTitleInfo }}>{item.title}: </span>
-              <span style={{ color: colorValueInfo }}>{item.value}</span>
+              <span style={{ color: colorValueInfo }}>{item.value ? item.value : 'Неизвестно'}</span>
             </Text>
           </Flex>
         ))}

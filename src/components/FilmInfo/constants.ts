@@ -13,7 +13,7 @@ export const getMovieInfo = (infoMovie: FilmInfoProps['infoMovie']) => {
       title: 'Длительность',
       value: infoMovie.movieLength
         ? infoMovie.movieLength + ' мин.'
-        : infoMovie.seriesLength + ' мин.'
+        : (infoMovie.seriesLength !== null ? infoMovie.seriesLength + ' мин.' : 'Неизвестно')
     },
     { title: 'Описание', value: infoMovie.description },
   ];

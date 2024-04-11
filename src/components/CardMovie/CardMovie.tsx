@@ -17,7 +17,7 @@ import { Paginations } from '../Paginations';
 import NotFoundImageDark from '../../assets/icons/not-found-dark.svg';
 import NotFoundImageLight from '../../assets/icons/not-found-light.svg';
 import { apiKP } from '../../utils/api';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const ContainerMovies = styled(Container)<{
   colorscheme: string;

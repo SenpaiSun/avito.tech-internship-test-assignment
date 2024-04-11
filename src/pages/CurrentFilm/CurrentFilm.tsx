@@ -1,4 +1,4 @@
-import { Container, Flex, Title, Text } from '@mantine/core';
+import { Container, Flex } from '@mantine/core';
 import '@mantine/carousel/styles.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import { apiKP } from '../../utils/api';
@@ -9,7 +9,6 @@ import { MovieImage } from '../../components/MovieImage';
 import { FilmInfo } from '../../components/FilmInfo/FilmInfo';
 import { PaginationItems } from '../../components/PaginationItems';
 import { PaginationReview } from '../../PaginationReview';
-import { currentMovie } from '../../store/movies/type';
 import { CarouselMovie } from '../../components/CarouselMovie';
 
 export const CurrentFilm = () => {
