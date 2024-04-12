@@ -22,6 +22,7 @@ export const Paginations = (props: PaginationsProps) => {
       total={total}
       mt="xs"
       style={{ marginLeft: 'auto', marginRight: 'auto' }}
+      siblings={0}
     />
   );
 };

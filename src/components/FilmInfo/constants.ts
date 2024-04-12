@@ -6,7 +6,7 @@ export const getMovieInfo = (infoMovie: FilmInfoProps['infoMovie']) => {
 
   return [
     { title: 'Год производства', value: infoMovie.year },
-    { title: 'Возрастной рейтинг', value: infoMovie.ageRating },
+    { title: 'Возрастной рейтинг', value: infoMovie.ageRating + '+' },
     { title: 'Жанр', value: genres },
     { title: 'Страна', value: countries },
     {

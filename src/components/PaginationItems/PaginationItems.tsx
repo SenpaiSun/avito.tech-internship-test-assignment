@@ -1,6 +1,7 @@
 import {
   Container,
   Flex,
+  Grid,
   Image,
   Text,
   Title,
@@ -48,40 +49,41 @@ export const PaginationItems = (props: PaginationProps) => {
             name = item.name;
           }
           return (
-            <Tooltip
-              label={name ? name : 'Неизвестно'}
-              position="bottom"
-              key={`${index}-${title}`}
-            >
-              <Flex direction={'column'}>
-                <Flex w={'100%'}>
-                  <Image
-                    m={'0 auto'}
-                    w={title === 'СПИСОК СЕРИЙ' ? '7vw' : '5vw'}
-                    h={title === 'СПИСОК СЕРИЙ' ? '4vw' : '8vw'}
-                    src={
-                      photoUrl
-                        ? photoUrl
-                        : title === 'СПИСОК СЕРИЙ'
-                          ? colorScheme === 'dark'
-                            ? NotFoundImageLight
-                            : NotFoundImageDark
-                          : MockImage()
-                    }
-                    fit="cover"
-                  />
+            <Grid.Col span={{base: 10, xs: 6, sm: 4, md: 4, lg: 4, xl: 4}}>
+              <Tooltip
+                label={name ? name : 'Неизвестно'}
+                position="bottom"
+                key={`${index}-${title}`}
+              >
+                <Flex direction={'column'} align={'center'}>
+                  <Flex w={'100%'}>
+                    <Image
+                      m={'0 auto'}
+                      w={title === 'СПИСОК СЕРИЙ' ? '140px' : '100'}
+                      h={title === 'СПИСОК СЕРИЙ' ? '100' : '140'}
+                      src={
+                        photoUrl
+                          ? photoUrl
+                          : title === 'СПИСОК СЕРИЙ'
+                            ? colorScheme === 'dark'
+                              ? NotFoundImageLight
+                              : NotFoundImageDark
+                            : MockImage()
+                      }
+                      fit="cover"
+                    />
+                  </Flex>
+                  <Text
+                    size="xs"
+                    maw={'max-content'}
+                    lineClamp={1}
+                    style={{ cursor: 'pointer' }}
+                  >
+                    {name ? name : 'Неизвестно'}
+                  </Text>
                 </Flex>
-                <Text
-                  size="xs"
-                  maw={'max-content'}
-                  w={title === 'СПИСОК СЕРИЙ' ? '7vw' : '5vw'}
-                  lineClamp={1}
-                  style={{ cursor: 'pointer' }}
-                >
-                  {name ? name : 'Неизвестно'}
-                </Text>
-              </Flex>
-            </Tooltip>
+              </Tooltip>
+            </Grid.Col>
           );
         });
       setDataPagination(newDataPagination);
@@ -103,7 +105,15 @@ export const PaginationItems = (props: PaginationProps) => {
         </Title>
         <Flex direction={'column'} justify={'space-between'}>
           {dataPagination && dataPagination.length > 0 ? (
-            <Flex gap={'20px'}>{dataPagination}</Flex>
+            <Grid
+              h={'100%'}
+              w={'100%'}
+              justify={'center'}
+              align={'center'}
+              columns={20}
+            >
+              {dataPagination}
+            </Grid>
           ) : (
             <Text>Нет данных</Text>
           )}

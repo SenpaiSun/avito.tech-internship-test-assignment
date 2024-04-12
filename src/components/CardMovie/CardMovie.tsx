@@ -21,6 +21,7 @@ import NotFoundImageDark from '../../assets/icons/not-found-dark.svg';
 import NotFoundImageLight from '../../assets/icons/not-found-light.svg';
 import { apiKP } from '../../utils/api';
 import { useNavigate } from 'react-router-dom';
+import { useMediaQuery } from '@mantine/hooks';
 
 const ContainerMovies = styled(Container)<{
   colorscheme: string;
@@ -59,6 +60,8 @@ export const CardMovie = () => {
   const moviesData = useAppSelector(state => state.movies);
   const searchData = useAppSelector(state => state.searchResult);
   const navigate = useNavigate();
+  const isMd = useMediaQuery('(min-width: 62em)');
+  const sizeTitle = isMd ? '32px' : '22px';
   useEffect(() => {
     if (searchData.searchValue === '') {
       setLoader(true);
@@ -96,7 +99,7 @@ export const CardMovie = () => {
         justify={'space-between'}
         align={'center'}
       >
-        <Title order={1}>ФИЛЬМЫ И СЕРИАЛЫ:</Title>
+        <Title order={1} size={sizeTitle}>ФИЛЬМЫ И СЕРИАЛЫ:</Title>
         <Select value={filterData.searchFilters.limit.toString()} onChange={handlerChangeLimit} placeholder="Показывать по" data={['10', '25', '50']} w={'160px'}></Select>
       </Flex>
 
@@ -171,6 +174,7 @@ export const CardMovie = () => {
           onChangePage={setPage}
           value={filterData.searchFilters.page}
           total={moviesData?.pages}
+          size="sm"
         />
       </Flex>
     </Container>

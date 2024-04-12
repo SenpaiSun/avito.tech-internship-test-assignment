@@ -97,7 +97,7 @@ export const FormFilter = () => {
   };
 
   return (
-    <ContainerFilter w={300} maw={300} p={'20px'}>
+    <ContainerFilter w={300} maw={300} p={'20px'} mb={'30px'}>
       <Title order={5} m={'0 auto 20px'}>Фильтры:</Title>
       <Flex gap={'xs'} direction={'column'}>
         {allFilters.map((item, index) => (

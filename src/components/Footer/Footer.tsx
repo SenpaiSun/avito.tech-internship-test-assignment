@@ -32,7 +32,7 @@ export const Footer = () => {
     <ContainerFooter fluid >
       <Flex justify="space-between">
         <Flex>
-          <Text>© 2024 AvitoCinema</Text>
+          <Text mr={'10px'}>© 2024 AvitoCinema</Text>
         </Flex>
         <Flex direction={'column'} gap={'xs'}>
           <Text fw={700} size="lg">

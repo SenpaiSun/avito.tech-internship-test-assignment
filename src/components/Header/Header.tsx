@@ -4,12 +4,15 @@ import {
   Title,
   useMantineColorScheme,
   DEFAULT_THEME,
+  em,
+  Grid
 } from '@mantine/core';
 import { DarkLightButton } from '../DarkLightButton';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useAppSelector } from '../../hooks/hooks';
 import { SearchInput } from '../SearchInput';
+import { useMediaQuery } from '@mantine/hooks';
 
 const ContainerHeader = styled(Container)<{ colorscheme: string }>`
   margin: 0px 0px 30px;
@@ -22,7 +25,7 @@ const ContainerHeader = styled(Container)<{ colorscheme: string }>`
   background-color: ${({ colorscheme }) =>
     colorscheme === 'dark'
       ? DEFAULT_THEME.colors.dark[6]
-      : DEFAULT_THEME.colors.gray[4]};
+      : DEFAULT_THEME.white};
   position: fixed;
   width: 100%;
   z-index: 2;
@@ -30,22 +33,40 @@ const ContainerHeader = styled(Container)<{ colorscheme: string }>`
 
 export const Header = () => {
   const { colorScheme } = useMantineColorScheme();
+  const isMobile = useMediaQuery(`(max-width: ${em(550)})`);
 
   return (
-    <ContainerHeader h={50} mt={'dm'} fluid colorscheme={colorScheme}>
-      <Flex justify="space-between" align="center">
-        <Link to="/movies" style={{ textDecoration: 'none' }}>
-          <Title
-            order={1}
-            c={colorScheme === 'dark' ? 'white' : 'black'}
-            fz={{ base: '24px', md: '32px' }}
-          >
-            AvitoCinema
-          </Title>
-        </Link>
-        <SearchInput />
-        <DarkLightButton></DarkLightButton>
-      </Flex>
+    <ContainerHeader
+      h={isMobile ? 100 : 50}
+      mt={'dm'}
+      fluid
+      colorscheme={colorScheme}
+      pt={6}
+    >
+      <Grid
+        h={'100%'}
+        w={'100%'}
+        justify={'space-between'}
+        align={'center'}
+      >
+        <Grid.Col order={1} span="content" >
+          <Link to="/movies" style={{ textDecoration: 'none' }}>
+            <Title
+              order={1}
+              c={colorScheme === 'dark' ? 'white' : 'black'}
+              fz={{ base: '24px' }}
+            >
+              AvitoCinema
+            </Title>
+          </Link>
+        </Grid.Col>
+        <Grid.Col order={isMobile ? 3 : 2} span={!isMobile ? 'content' : 'auto'} >
+          <SearchInput isMobile={isMobile}/>
+        </Grid.Col>
+        <Grid.Col order={isMobile ? 2 : 3} span="content" w={'auto'}>
+          <DarkLightButton />
+        </Grid.Col>
+      </Grid>
     </ContainerHeader>
   );
 };

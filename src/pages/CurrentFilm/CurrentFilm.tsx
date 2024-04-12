@@ -1,4 +1,4 @@
-import { Container, Flex, Button, DEFAULT_THEME } from '@mantine/core';
+import { Container, Flex, Button, DEFAULT_THEME, em } from '@mantine/core';
 import '@mantine/carousel/styles.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import { apiKP } from '../../utils/api';
@@ -10,6 +10,7 @@ import { FilmInfo } from '../../components/FilmInfo/FilmInfo';
 import { PaginationItems } from '../../components/PaginationItems';
 import { PaginationReview } from '../../components/PaginationReview';
 import { CarouselMovie } from '../../components/CarouselMovie';
+import { useMediaQuery } from '@mantine/hooks';
 
 export const CurrentFilm = () => {
   const { setCurrentMovie, setPosters, setReview, setSeries } = useActions();
@@ -48,6 +49,7 @@ export const CurrentFilm = () => {
   const isSeries = currentFilm.currentMovie.infoMovie.isSeries;
   const review = currentFilm.currentMovie.review.docs;
   const similarMovies = currentFilm.currentMovie.infoMovie.similarMovies;
+  const isMobile = useMediaQuery(`(max-width: ${em(576)})`);
 
 console.log(searchUrl)
   return (
@@ -58,18 +60,18 @@ console.log(searchUrl)
           w={'100px'}
           h={'30px'}
           onClick={() => navigate(searchUrl)}
-          m={'0 0 50px 60px'}
+          m={'0 0 50px 0'}
         >
           Назад
         </Button>
-        <Flex pb={'50px'}>
+        <Flex pb={'50px'} direction={{base: 'column', md: 'row'}} align={{base: 'center', md:'start'}} gap={{base: '30px', md:'0'}}>
           <MovieImage
             posters={currentFilm.currentMovie.posters}
             prewievUrl={currentFilm.currentMovie.infoMovie.poster?.previewUrl}
           />
           <FilmInfo infoMovie={currentFilm.currentMovie.infoMovie} />
         </Flex>
-        <Flex direction={'column'} gap={'lg'}>
+        <Flex direction={'column'} gap={'lg'} w={'100%'} >
           <PaginationItems items={actors} title={'АКТЕРЫ:'} />
           {isSeries && (
             <PaginationItems items={seriesData} title={'СПИСОК СЕЗОНОВ'} />
@@ -78,7 +80,7 @@ console.log(searchUrl)
             <PaginationItems items={episodes} title={'СПИСОК СЕРИЙ'} />
           )}
           <PaginationReview items={review} title={'Отзывы пользователей:'} />
-          <CarouselMovie items={similarMovies} title={'Похожие фильмы'} />
+          <CarouselMovie items={similarMovies} title={'Похожие фильмы'} isMobile={isMobile}/>
         </Flex>
       </Flex>
     </Container>

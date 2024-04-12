@@ -14,14 +14,14 @@ export const MovieImage = (props: MovieImageProps) => {
 
   const otherSlides = posters.map((item, index) => (
     <Carousel.Slide key={index} >
-      <Image w={280} h={350} m={'0 auto'} src={item.url ? item.url : MockImage()} fit="cover"/>
+      <Image w={{base: '220px',md: '260px'}} h={{base: '320px',md: '350px'}} m={'0 auto'} src={item.url ? item.url : MockImage()} fit="cover"/>
     </Carousel.Slide>
   ));
 
   return (
     <>
      {posters && (
-          <Carousel loop pb={'50px'} w={400} h={350}>{firstSlide}{otherSlides}</Carousel>
+          <Carousel loop pb={'50px'} w={{base: '320px',md: '400px'}} h={350}>{firstSlide}{otherSlides}</Carousel>
         )}
     </>
   );

@@ -22,13 +22,13 @@ export const FilmInfo = (props: FilmInfoProps) => {
   const movieInfo = getMovieInfo(infoMovie);
 
   return (
-    <Flex justify={'space-between'} direction={'row'} w={'100%'}>
+    <Flex justify={'space-between'} direction={{base:'column-reverse',md:'row'}} w={'100%'}>
       <Flex direction={'column'} ml={'20px'}>
-        <Title order={1} size="h1" fw={700}>
+        <Title order={1} size="h2" fw={700}>
           {infoMovie.name} {infoMovie.year ? '(' + infoMovie.year + ')' : ''}
         </Title>
         <Text ml={'10px'} fs="italic" mb={'20px'}>
-          {infoMovie.alternativeName} &emsp;
+          {infoMovie.alternativeName ? infoMovie.alternativeName + ' ' : ''}
           {infoMovie.ageRating ? infoMovie.ageRating + '+' : ''}
         </Text>
         {movieInfo.map((item, index) => (
@@ -40,7 +40,7 @@ export const FilmInfo = (props: FilmInfoProps) => {
           </Flex>
         ))}
       </Flex>
-      <Flex mr={'50px'}>
+      <Flex mr={{base: '10px',md:'50px'}} justify={'center'} mb={'20px'}>
         <Text
           size="40px"
           fw={900}

@@ -4,17 +4,18 @@ import { useDebouncedSearch } from "../../hooks/debounce";
 import { useAppSelector } from "../../hooks/hooks";
 import { useActions } from "../../hooks/actions";
 import { apiKP } from "../../utils/api";
-import { CloseButton, Input } from "@mantine/core";
+import { CloseButton, Input, em } from "@mantine/core";
+import { useMediaQuery } from "@mantine/hooks";
 const { REACT_APP_API_TOKEN } = process.env;
 
-export const SearchInput = () => {
+export const SearchInput = ({isMobile} : {isMobile: boolean | undefined}) => {
   const searchValue = useAppSelector(state => state.searchResult.searchValue);
   const state = useAppSelector(state => state);
   const { setSearchValue, setMovies, setLoader } = useActions();
   const debouncedSearchValue = useDebouncedSearch(searchValue, 1000);
   const [value, setValue] = useState('Clear me');
   const navigate = useNavigate();
-  console.log(state)
+
 
   useEffect(() => {
     if (searchValue !== '') {
@@ -65,8 +66,8 @@ export const SearchInput = () => {
           onChange={event => handlerInput(event.currentTarget.value)}
           radius="xl"
           placeholder="Поиск по названию"
-          w={300}
-          mt={4}
+          w={280}
+          m={'auto'}
           rightSectionPointerEvents="all"
           rightSection={
             <CloseButton
@@ -79,8 +80,7 @@ export const SearchInput = () => {
           onKeyDown={event => {
             if (
               event.key === 'Enter' &&
-              REACT_APP_API_TOKEN &&
-              searchValue !== ''
+              REACT_APP_API_TOKEN
             ) {
               setLoader(true);
               apiKP.searchMoviesByName(
@@ -88,6 +88,7 @@ export const SearchInput = () => {
                 state.filters.searchFilters.page,
                 state.filters.searchFilters.limit
               );
+              navigate('/movies');
             }
           }}
         />

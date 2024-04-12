@@ -13,7 +13,7 @@ export const Movies = () => {
 
   return (
     <ContainerMovies fluid>
-      <Flex justify={'start'} align={'start'} >
+      <Flex justify={'start'} align={{ base: 'center', sm: 'start'}} direction={{ base: 'column', sm: 'row'}}>
         <FormFilter></FormFilter>
         <CardMovie></CardMovie>
       </Flex>

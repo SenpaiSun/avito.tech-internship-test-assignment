@@ -29,8 +29,8 @@ const ContainerReview = styled(Container)<{
         : DEFAULT_THEME.colors.dark[1]};
   background-color: ${({ colorscheme }) =>
     colorscheme === 'dark'
-      ? DEFAULT_THEME.colors.dark[6]
-      : DEFAULT_THEME.colors.gray[1]};
+      ? DEFAULT_THEME.colors.dark[8]
+      : DEFAULT_THEME.colors.gray[0]};
   border-radius: 12px;
   width: 100%;
   padding: 10px;
@@ -70,7 +70,7 @@ export const PaginationReview = (props: PaginationReviewProps) => {
           <ContainerReview colorscheme={colorScheme}>
             <Flex direction={'column'} gap={'10px'}>
               <Flex
-                direction={'row'}
+                direction={{base:'column', xs:'row'}}
                 justify={'space-between'}
                 w={'100%'}
                 gap={'10px'}
@@ -80,7 +80,7 @@ export const PaginationReview = (props: PaginationReviewProps) => {
                 }}
               >
                 <Text size="xl">{author}</Text>
-                <Text size="xs" fs={'italic'}>
+                <Text size="xs" fs={'italic'} mb={{base:'10px', xs:'0'}}>
                   {date}
                 </Text>
               </Flex>
@@ -99,7 +99,7 @@ export const PaginationReview = (props: PaginationReviewProps) => {
   }, [colorScheme, items, title]);
 
   return (
-    <Container m={'0 auto'} p={'0 0'}>
+    <Container m={'0 auto'} p={'0 0'} >
       <Flex
         direction={'column'}
         justify={'center'}
