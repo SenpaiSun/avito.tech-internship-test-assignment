@@ -1,6 +1,11 @@
 # Тестовое задание на стажировку в [Avito.Tech](https://start.avito.ru/tech)
 ### Описание проекта:
 Фронтенд приложение для быстрого поиска информации по фильмам и сериалам с платформы «Кинопоиска», с возможностью просмотра основной информации по конкретному фильму.
+
+![2024-04-13 23-48-23 (online-video-cutter com)](https://github.com/SenpaiSun/avito.tech-internship-test-assignment/assets/100027896/467cbeb0-988e-4df8-b282-47238c04015a)
+
+
+
 ### Стек приложения:
 - [React](https://react.dev/)
 - [TypeScript](https://www.typescriptlang.org/)
