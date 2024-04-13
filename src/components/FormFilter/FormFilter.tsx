@@ -59,28 +59,28 @@ export const FormFilter = () => {
 
     switch (label) {
       case 'year':
-        if (value !== '') {
+        if (value !== '' && value !== 'Все года') {
           newSearchParams.set('year', value);
         } else {
           newSearchParams.delete('year');
         }
         break;
       case 'genres':
-        if (value !== '') {
+        if (value !== '' && value !== 'Все жанры') {
           newSearchParams.set('genres.name', value.toLowerCase());
         } else {
           newSearchParams.delete('genres.name');
         }
         break;
       case 'countries':
-        if (value !== '') {
+        if (value !== '' && value !== 'Все страны') {
           newSearchParams.set('countries.name', value);
         } else {
           newSearchParams.delete('countries.name');
         }
         break;
       case 'ageRating':
-        if (value !== '') {
+        if (value !== '' && value !== 'Все возрастные рейтинги') {
           newSearchParams.set('ageRating', value.replace('+', ''));
         } else {
           newSearchParams.delete('ageRating');

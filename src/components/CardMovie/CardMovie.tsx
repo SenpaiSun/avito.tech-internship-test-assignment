@@ -170,12 +170,12 @@ export const CardMovie = () => {
               </Flex>
             </ContainerMovies>
           ))
-        ) : (
+        ) : ( searchData.loader ?
           <Loader
             size={42}
             m={'auto'}
             color={colorScheme === 'dark' ? 'white' : 'black'}
-          />
+          /> : <Text m={'auto'}>Ничего не найдено</Text>
         )}
         <Paginations
           onChangePage={setPage}
