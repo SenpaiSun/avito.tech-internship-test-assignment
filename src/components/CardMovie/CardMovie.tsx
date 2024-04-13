@@ -62,8 +62,13 @@ export const CardMovie = () => {
   const navigate = useNavigate();
   const isMd = useMediaQuery('(min-width: 62em)');
   const sizeTitle = isMd ? '32px' : '22px';
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const queryPage = searchParams.get('page') || '1';
+  // const newSearchParams = new URLSearchParams(searchParams);
+  // newSearchParams.set('page', String(queryPage));
+  // setSearchParams(newSearchParams)
   useEffect(() => {
+
     if (searchData.searchValue === '' ) {
       setLoader(true);
       apiKP
@@ -89,6 +94,9 @@ export const CardMovie = () => {
       setLimit(Number(value));
     }
   }
+
+
+
 
   return (
     <Container fluid w={'100%'} maw={800} mih={800}>
@@ -174,7 +182,7 @@ export const CardMovie = () => {
         )}
         <Paginations
           onChangePage={setPage}
-          value={filterData.searchFilters.page}
+          value={+queryPage}
           total={moviesData?.pages}
           size="sm"
         />

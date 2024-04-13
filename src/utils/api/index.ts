@@ -29,7 +29,7 @@ class Api {
 
   getMovies(page: number, limit: number): Promise<any> {
     const queryParams = this._getQueryParams();
-    return fetch(`${this._url}/v1.4/movie?page=${page}&limit=${limit}${queryParams ? '&' + queryParams : ''}`, {
+    return fetch(`${this._url}/v1.4/movie?limit=${limit}${queryParams ? '&' + queryParams : ''}`, {
       method: 'GET',
       headers: this._headers
     }).then(res => this._checkedError(res));
