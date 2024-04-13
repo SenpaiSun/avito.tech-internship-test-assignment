@@ -1,4 +1,5 @@
 export const years = [
+  'Все года',
   '2020-2024',
   '2010-2019',
   '2000-2009',
@@ -41,6 +42,7 @@ export const years = [
 ]
 
 export const countries = [
+  'Все страны',
   'Россия',
   'СССР',
   'США',
@@ -238,6 +240,7 @@ export const countries = [
 ];
 
 export const genres = [
+  'Все жанры',
   'Боевик',
   'Комедия',
   'Документальный',
@@ -265,6 +268,7 @@ export const genres = [
 ];
 
 export const ageRestrictions = [
+  'Все возрастные рейтинги',
   '0+',
   '6+',
   '12+',

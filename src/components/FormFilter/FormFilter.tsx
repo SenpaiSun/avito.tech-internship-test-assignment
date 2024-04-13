@@ -35,16 +35,20 @@ export const FormFilter = () => {
   const getParams = (label: string) => {
     switch (label) {
       case 'year':
-        return searchParams.get('year') || '';
+        return searchParams.get('year') || 'Все года';
       case 'genres':
-        const genresName = searchParams.get('genres.name') || '';
+        const genresName = searchParams.get('genres.name') || 'Все жанры';
         const capitalizedGenresName =
         genresName.charAt(0).toUpperCase() + genresName.slice(1);
         return capitalizedGenresName;
       case 'countries':
-        return searchParams.get('countries.name') || '';
+        return searchParams.get('countries.name') || 'Все страны';
       case 'ageRating':
-        return (searchParams.get('ageRating') + '+') || '';
+        if(searchParams.get('ageRating')) {
+          return (searchParams.get('ageRating') + '+') || 'Все возрастные рейтинги';
+        } else {
+          return 'Все возрастные рейтинги';
+        }
       default:
         return '';
     }
@@ -103,13 +107,14 @@ export const FormFilter = () => {
       </Title>
       <Flex gap={'xs'} direction={'column'}>
         {allFilters.map((item, index) => (
-          <Select
+            <Select
+            label={item.placeholder}
             key={index}
             searchable={item.placeholder === 'Страна' ? true : false}
             data={item.data}
             w={'100%'}
             placeholder={item.placeholder}
-            defaultValue={null}
+            defaultValue={item.data[0]}
             value={getParams(item.label)}
             onChange={e => setParams(item.label, e || '')}
           />
