@@ -7,13 +7,8 @@ import {
   Title
 } from '@mantine/core';
 import styled from 'styled-components';
-import { allFilters, years } from './constants';
-import { useEffect, useState } from 'react';
-import { useActions } from '../../hooks/actions';
-import { useAppSelector } from '../../hooks/hooks';
-import { SearchFilters } from '../../store/movies/type';
+import { allFilters } from './constants';
 import { useSearchParams } from 'react-router-dom';
-import { useForm } from '@mantine/form';
 
 const ContainerFilter = styled(Container)({
   border: `1px solid ${DEFAULT_THEME.colors.dark[2]}`,
@@ -21,15 +16,7 @@ const ContainerFilter = styled(Container)({
   margin: '0'
 });
 
-type Params = {
-  year: string;
-  countries: string;
-  genres: string;
-  ageRating: string;
-};
-
 export const FormFilter = () => {
-  const stateFilter = useAppSelector(state => state.filters.searchFilters);
   const [searchParams, setSearchParams] = useSearchParams();
 
   const getParams = (label: string) => {

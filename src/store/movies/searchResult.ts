@@ -26,9 +26,6 @@ export const searchResultSlice = createSlice({
     setSearchValue: (state, action) => {
       state.searchValue = action.payload
     },
-    setResult: (state, action) => {
-      state.result = action.payload
-    },
     setLoader: (state, action) => {
       state.loader = action.payload
     },

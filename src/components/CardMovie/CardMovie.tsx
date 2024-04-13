@@ -1,5 +1,4 @@
 import {
-  Button,
   ComboboxItem,
   Container,
   DEFAULT_THEME,
@@ -62,7 +61,7 @@ export const CardMovie = () => {
   const navigate = useNavigate();
   const isMd = useMediaQuery('(min-width: 62em)');
   const sizeTitle = isMd ? '32px' : '22px';
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const queryPage = searchParams.get('page') || '1';
 
   useEffect(() => {

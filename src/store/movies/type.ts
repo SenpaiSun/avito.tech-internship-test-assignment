@@ -287,10 +287,6 @@ export type SearchResult = {
 export type SearchFilters = {
   page: number
   limit: number
-  year: string
-  genres: string
-  countries: string
-  ageRating: string
 }
 
 type ReviewFilters = {
@@ -301,5 +297,4 @@ type ReviewFilters = {
 export type Filters = {
   searchFilters: SearchFilters
   reviewFilters: ReviewFilters
-  searchUrl: string
 }
