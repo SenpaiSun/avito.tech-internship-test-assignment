@@ -20,7 +20,7 @@ import { Paginations } from '../Paginations';
 import NotFoundImageDark from '../../assets/icons/not-found-dark.svg';
 import NotFoundImageLight from '../../assets/icons/not-found-light.svg';
 import { apiKP } from '../../utils/api';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useMediaQuery } from '@mantine/hooks';
 
 const ContainerMovies = styled(Container)<{
@@ -62,8 +62,9 @@ export const CardMovie = () => {
   const navigate = useNavigate();
   const isMd = useMediaQuery('(min-width: 62em)');
   const sizeTitle = isMd ? '32px' : '22px';
+  const [searchParams] = useSearchParams();
   useEffect(() => {
-    if (searchData.searchValue === '') {
+    if (searchData.searchValue === '' ) {
       setLoader(true);
       apiKP
         .getMovies(
@@ -80,7 +81,8 @@ export const CardMovie = () => {
           console.error('Error fetching data:', error);
         });
     }
-  }, [filterData.searchFilters.page, filterData.searchFilters.limit, filterData.searchFilters.year, filterData.searchFilters.genres, filterData.searchFilters.countries, filterData.searchFilters.ageRating]);
+    console.log(filterData)
+  }, [filterData.searchFilters.page, filterData.searchFilters.limit, searchParams]);
 
   const handlerChangeLimit = (value: string | null, option: ComboboxItem | null) => {
     if (value !== null && option !== null) {

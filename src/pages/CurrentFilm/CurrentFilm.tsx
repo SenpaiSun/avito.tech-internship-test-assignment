@@ -52,6 +52,7 @@ export const CurrentFilm = () => {
   const isMobile = useMediaQuery(`(max-width: ${em(576)})`);
 
 console.log(searchUrl)
+console.log(useAppSelector(state => state.filters))
   return (
     <Container fluid pt={'120px'}>
       <Flex direction={'column'} justify={'center'}>

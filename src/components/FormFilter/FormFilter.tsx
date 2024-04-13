@@ -1,10 +1,19 @@
-import { Button, Container, DEFAULT_THEME, Flex, Select, Title } from '@mantine/core';
+import {
+  Button,
+  Container,
+  DEFAULT_THEME,
+  Flex,
+  Select,
+  Title
+} from '@mantine/core';
 import styled from 'styled-components';
-import { allFilters } from './constants';
+import { allFilters, years } from './constants';
 import { useEffect, useState } from 'react';
 import { useActions } from '../../hooks/actions';
 import { useAppSelector } from '../../hooks/hooks';
 import { SearchFilters } from '../../store/movies/type';
+import { useSearchParams } from 'react-router-dom';
+import { useForm } from '@mantine/form';
 
 const ContainerFilter = styled(Container)({
   border: `1px solid ${DEFAULT_THEME.colors.dark[2]}`,
@@ -20,85 +29,78 @@ type Params = {
 };
 
 export const FormFilter = () => {
-  const { setYear, setGenre, setCountry, setAge, setSearchUrl } = useActions();
   const stateFilter = useAppSelector(state => state.filters.searchFilters);
-  const [params, setParams] = useState<Params>({
-    year: '',
-    countries: '',
-    genres: '',
-    ageRating: ''
-  });
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  useEffect(() => {
-    const searchParams = new URLSearchParams(window.location.search);
-    const year = searchParams.get('year') || '';
-    const countries = searchParams.get('countries') || '';
-    const genres = searchParams.get('genres') || '';
-    const ageRating = searchParams.get('ageRating') || '';
-    setParams({
-      year,
-      countries,
-      genres,
-      ageRating
-    });
-  }, []);
-
-  useEffect(() => {
-    const searchParams = new URLSearchParams();
-    for (const key in params) {
-      if (params[key as keyof Params]) {
-        if (key !== 'countries' && key !== 'genres') {
-          searchParams.append(key, params[key as keyof Params]);
-        } else {
-          searchParams.append(key + '.name', params[key as keyof Params]);
-        }
-      }
-    }
-    const queryString = searchParams.toString();
-    const url =
-      window.location.pathname + (queryString ? '?' + queryString : '');
-    window.history.pushState({ path: url }, '', url);
-    const searchUrl = window.location.pathname + '?' + queryString;
-    setSearchUrl(searchUrl);
-    console.log('asdasd')
-  }, [params, setSearchUrl, stateFilter]);
-
-  const handleChange = (key: keyof Params, value: string) => {
-    switch (key) {
+  const getParams = (label: string) => {
+    switch (label) {
       case 'year':
-        setYear(value);
-        setParams(prevParams => ({
-          ...prevParams,
-          [key]: value
-        }));
-        break;
-      case 'countries':
-        setCountry(value);
-        setParams(prevParams => ({
-          ...prevParams,
-          [key]: value
-        }));
-        break;
+        return searchParams.get('year') || '';
       case 'genres':
-        setGenre(value);
-        setParams(prevParams => ({
-          ...prevParams,
-          [key]: value.toLowerCase()
-        }));
-        break;
+        const genresName = searchParams.get('genres.name') || '';
+        const capitalizedGenresName =
+        genresName.charAt(0).toUpperCase() + genresName.slice(1);
+        return capitalizedGenresName;
+      case 'countries':
+        return searchParams.get('countries.name') || '';
       case 'ageRating':
-        setAge(value);
-        setParams(prevParams => ({
-          ...prevParams,
-          [key]: value.replace('+', '')
-        }));
-        break;
+        return (searchParams.get('ageRating') + '+') || '';
+      default:
+        return '';
     }
   };
 
+  const setParams = (label: string, value: string) => {
+    const newSearchParams = new URLSearchParams(searchParams);
+
+    switch (label) {
+      case 'year':
+        if (value !== '') {
+          newSearchParams.set('year', value);
+        } else {
+          newSearchParams.delete('year');
+        }
+        break;
+      case 'genres':
+        if (value !== '') {
+          newSearchParams.set('genres.name', value.toLowerCase());
+        } else {
+          newSearchParams.delete('genres.name');
+        }
+        break;
+      case 'countries':
+        if (value !== '') {
+          newSearchParams.set('countries.name', value);
+        } else {
+          newSearchParams.delete('countries.name');
+        }
+        break;
+      case 'ageRating':
+        if (value !== '') {
+          newSearchParams.set('ageRating', value.replace('+', ''));
+        } else {
+          newSearchParams.delete('ageRating');
+        }
+        break;
+      default:
+        break;
+    }
+
+    setSearchParams(newSearchParams);
+  };
+
+
+  const clearFilters = () => {
+    setSearchParams({});
+  };
+
+
+
   return (
     <ContainerFilter w={300} maw={300} p={'20px'} mb={'30px'}>
-      <Title order={5} m={'0 auto 20px'}>Фильтры:</Title>
+      <Title order={5} m={'0 auto 20px'}>
+        Фильтры:
+      </Title>
       <Flex gap={'xs'} direction={'column'}>
         {allFilters.map((item, index) => (
           <Select
@@ -107,12 +109,14 @@ export const FormFilter = () => {
             data={item.data}
             w={'100%'}
             placeholder={item.placeholder}
-            value={stateFilter[item.label as keyof SearchFilters] as string} //
-            onChange={value =>
-              handleChange(item.label as keyof Params, value ? value : '')
-            }
+            defaultValue={null}
+            value={getParams(item.label)}
+            onChange={e => setParams(item.label, e || '')}
           />
         ))}
+      </Flex>
+      <Flex justify={'space-between'} gap={'10px'} mt={'20px'}>
+        <Button w={'100%'} onClick={() => clearFilters()} color={DEFAULT_THEME.colors.dark[5]}>Очистить фильтр</Button>
       </Flex>
     </ContainerFilter>
   );

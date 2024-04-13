@@ -38,7 +38,7 @@ export const filtersSlice = createSlice({
     },
     setAge: (state, action) => {
       console.log(action.payload)
-      state.searchFilters.ageRating = action.payload;
+      state.searchFilters.ageRating = action.payload.replace('+', '');
     },
     setSearchUrl: (state, action) => {
       state.searchUrl = action.payload
