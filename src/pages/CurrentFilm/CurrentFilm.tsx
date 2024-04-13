@@ -15,7 +15,7 @@ import { useMediaQuery } from '@mantine/hooks';
 export const CurrentFilm = () => {
   const { setCurrentMovie, setPosters, setReview, setSeries } = useActions();
   const currentFilm = useAppSelector(state => state.searchResult);
-  const searchUrl = useAppSelector(state => state.filters.searchUrl);
+  const searchUrl = localStorage.getItem('url') !== null ? localStorage.getItem('url') : '';
   const { id } = useParams();
   const navigate = useNavigate();
   useEffect(() => {
@@ -51,7 +51,6 @@ export const CurrentFilm = () => {
   const similarMovies = currentFilm.currentMovie.infoMovie.similarMovies;
   const isMobile = useMediaQuery(`(max-width: ${em(576)})`);
 
-console.log(searchUrl)
 console.log(useAppSelector(state => state.filters))
   return (
     <Container fluid pt={'120px'}>
@@ -60,7 +59,7 @@ console.log(useAppSelector(state => state.filters))
           bg={DEFAULT_THEME.colors.gray[6]}
           w={'100px'}
           h={'30px'}
-          onClick={() => navigate(searchUrl)}
+          onClick={() => navigate(`/movies?${searchUrl}`)}
           m={'0 0 50px 0'}
         >
           Назад

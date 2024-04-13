@@ -61,7 +61,7 @@ export const Header = () => {
           </Link>
         </Grid.Col>
         <Grid.Col order={isMobile ? 3 : 2} span={!isMobile ? 'content' : 'auto'} >
-          <SearchInput isMobile={isMobile}/>
+          <SearchInput/>
         </Grid.Col>
         <Grid.Col order={isMobile ? 2 : 3} span="content" w={'auto'}>
           <DarkLightButton />

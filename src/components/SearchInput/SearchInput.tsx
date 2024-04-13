@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { useDebouncedSearch } from "../../hooks/debounce";
 import { useAppSelector } from "../../hooks/hooks";
 import { useActions } from "../../hooks/actions";
@@ -8,36 +8,43 @@ import { CloseButton, Input, em } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 const { REACT_APP_API_TOKEN } = process.env;
 
-export const SearchInput = ({isMobile} : {isMobile: boolean | undefined}) => {
+export const SearchInput = () => {
   const searchValue = useAppSelector(state => state.searchResult.searchValue);
   const state = useAppSelector(state => state);
-  const { setSearchValue, setMovies, setLoader } = useActions();
+  const { setSearchValue, setMovies, setLoader, setPage } = useActions();
   const debouncedSearchValue = useDebouncedSearch(searchValue, 1000);
-  const [value, setValue] = useState('Clear me');
+  const [value, setValue] = useState<string>('Clear me');
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const pages = searchParams.get('page');
+  const location = useLocation();
 
-
-  useEffect(() => {
-    if (searchValue !== '') {
-      setLoader(true);
-      apiKP
+  const getMoviesByNameSearch = async () => {
+    await apiKP
         .searchMoviesByName(
           debouncedSearchValue,
-          state.filters.searchFilters.page,
           state.filters.searchFilters.limit
         )
         .then(data => {
           if (data) {
             setMovies(data);
           }
-          navigate('/movies');
+          if(location.pathname !== '/movies') {
+            navigate('/movies');
+          }
           setLoader(false);
         })
         .catch(error => {
           console.error('Error fetching data:', error);
         });
+  }
+
+  useEffect(() => {
+    if (searchValue !== '') {
+      setLoader(true);
+      getMoviesByNameSearch();
     }
-  }, [debouncedSearchValue, state.filters.searchFilters.page, state.filters.searchFilters.limit]);
+  }, [debouncedSearchValue, pages, state.filters.searchFilters.limit]);
 
   const handlerInput = (value: string) => {
     setValue(value);
@@ -48,7 +55,7 @@ export const SearchInput = ({isMobile} : {isMobile: boolean | undefined}) => {
     setSearchValue('');
     setLoader(true);
     apiKP
-      .getMovies(state.filters.searchFilters.page, state.filters.searchFilters.limit)
+      .getMovies(state.filters.searchFilters.limit)
       .then(data => {
         if (data) {
           setMovies(data);
@@ -83,12 +90,7 @@ export const SearchInput = ({isMobile} : {isMobile: boolean | undefined}) => {
               REACT_APP_API_TOKEN
             ) {
               setLoader(true);
-              apiKP.searchMoviesByName(
-                debouncedSearchValue,
-                state.filters.searchFilters.page,
-                state.filters.searchFilters.limit
-              );
-              navigate('/movies');
+              getMoviesByNameSearch();
             }
           }}
         />

@@ -64,16 +64,13 @@ export const CardMovie = () => {
   const sizeTitle = isMd ? '32px' : '22px';
   const [searchParams, setSearchParams] = useSearchParams();
   const queryPage = searchParams.get('page') || '1';
-  // const newSearchParams = new URLSearchParams(searchParams);
-  // newSearchParams.set('page', String(queryPage));
-  // setSearchParams(newSearchParams)
+
   useEffect(() => {
 
     if (searchData.searchValue === '' ) {
       setLoader(true);
       apiKP
         .getMovies(
-          filterData.searchFilters.page,
           filterData.searchFilters.limit
         )
         .then(data => {

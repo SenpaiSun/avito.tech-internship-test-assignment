@@ -24,19 +24,23 @@ class Api {
 
   private _getQueryParams(): string {
     const searchParams = new URLSearchParams(window.location.search);
+    console.log(searchParams)
     return searchParams.toString();
   }
 
-  getMovies(page: number, limit: number): Promise<any> {
+  getMovies(limit: number): Promise<any> {
     const queryParams = this._getQueryParams();
+    localStorage.setItem('url', queryParams)
     return fetch(`${this._url}/v1.4/movie?limit=${limit}${queryParams ? '&' + queryParams : ''}`, {
       method: 'GET',
       headers: this._headers
     }).then(res => this._checkedError(res));
   }
-  searchMoviesByName(name: string, page: number, limit: number): Promise<any> {
+  searchMoviesByName(name: string, limit: number): Promise<any> {
+    const queryParams = this._getQueryParams();
+    localStorage.setItem('url', queryParams)
     return fetch(
-      `${this._url}/v1.4/movie/search?page=${page}&limit=${limit}&query=${name}&sortField=votes.kp`,
+      `${this._url}/v1.4/movie/search?${queryParams ? '&' + queryParams : ''}&limit=${limit}&query=${name}&sortField=votes.kp`,
       {
         method: 'GET',
         headers: this._headers

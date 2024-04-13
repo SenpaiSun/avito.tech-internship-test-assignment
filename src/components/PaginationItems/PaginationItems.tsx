@@ -23,7 +23,7 @@ export type PaginationProps = {
 export const PaginationItems = (props: PaginationProps) => {
   const { items, title } = props;
   const { colorScheme } = useMantineColorScheme();
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const itemsPerPage = 10;
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;

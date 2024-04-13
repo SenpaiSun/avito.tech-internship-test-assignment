@@ -28,7 +28,10 @@ export const CarouselMovie = (props: CarouselMovieProps) => {
                 w={{base: '100px', xs: '150px', sm: '180px',md: '280px'}}
                 h={{base: '100px', xs: '190px', sm: '220px',md: '350px'}}
                 src={item.poster?.url}
-                onClick={() => navigate(`/movie/${item.id}`)}
+                onClick={() => {
+                  navigate(`/movie/${item.id}`)
+                  window.scrollTo(0, 0);
+                }}
                 style={{ cursor: 'pointer' }}
               />
             </Flex>

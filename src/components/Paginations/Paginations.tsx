@@ -1,7 +1,7 @@
 import { Pagination } from '@mantine/core';
 import { useAppSelector } from '../../hooks/hooks';
 import { useActions } from '../../hooks/actions';
-import { useSearchParams } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router-dom';
 
 interface PaginationsProps {
   value: number;
@@ -13,10 +13,15 @@ interface PaginationsProps {
 export const Paginations = (props: PaginationsProps) => {
   const { value, total, onChangePage, size } = props;
   const [searchParams, setSearchParams] = useSearchParams();
+  const searchValue = useAppSelector(state => state.searchResult);
+  const location = useLocation();
   const handlerPagination = (e: number) => {
     const newSearchParams = new URLSearchParams(searchParams);
-    newSearchParams.set('page', String(e));
-    onChangePage(e)
+    if(location.pathname === '/movies') {
+      newSearchParams.set('page', String(e));
+    } else {
+      onChangePage(e)
+    }
     setSearchParams(newSearchParams)
   };
   return (
