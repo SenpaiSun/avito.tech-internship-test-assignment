@@ -12,7 +12,7 @@
 - [Mantine](https://mantine.dev/)
 - [Redux Toolkit](https://redux-toolkit.js.org/)
 - [Husky](https://www.npmjs.com/package/husky)
-- [SCC-in-JS(styled components)](https://styled-components.com/docs/basics)
+- [CSS-in-JS(styled components)](https://styled-components.com/docs/basics)
 ## Инструкция по запуску:
 - Клонировать проект командой `git clone git@github.com:SenpaiSun/avito.tech-internship-test-assignment.git`;
 - Установить необходимые зависимости командой `npm install`;
